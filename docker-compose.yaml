@@ -1,0 +1,13 @@
+version: 'latest'
+
+services:
+  app :
+    build : 
+      context : .
+      dockerfile : DOCKERFILE
+
+    ports : 
+      - "8000:8000"
+
+    volumes : 
+      - .:/app
