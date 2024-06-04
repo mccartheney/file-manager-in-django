@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from users import forms
 
+# view to return home page
 def home_page (request) :
+
+    # return home page
     return render(request, "landingPage.html")
