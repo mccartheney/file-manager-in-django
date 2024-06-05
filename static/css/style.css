@@ -16,16 +16,21 @@
 /* ---- import welcome section on landing page css ---- */
 @import url("/static/css/welcomePage/welcome/welcome.css");
 
+/* ---- import files on mc_files section on landing page css ---- */
+@import url("/static/css/welcomePage/filesOnMc/filesOnMc.css");
+
 
 :root {
+    overflow-x: hidden;
+
     /* purples */
     --dark-purple : #7946a8;
     --medium-purple : #9263be;
     --light-purple : #ab87cd;
 
     /* grays */
-    --dark-gray : #302939;
-    --light-gray : #493e57;
+    --dark-gray : #222222;
+    --light-gray : #4d4a52;
 
     /* white */
     --white : #ffffff;
