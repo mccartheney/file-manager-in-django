@@ -1,0 +1,19 @@
+
+.logo {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: 180px;
+    color: white;
+}
+
+.logo img {
+    width: 75px;
+}
+
+.logo p {
+    font-family: "oswald", sans-serif;
+    font-weight: bolder;
+    font-size: 30px;
+
+}

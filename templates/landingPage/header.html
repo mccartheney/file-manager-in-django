@@ -1,0 +1,26 @@
+{% load static %}
+
+<header>
+    <div class="header_logo">
+        {% include 'logo.html' %}
+    </div>
+
+    <nav class="header_navigation">
+        <a href="" class="header_navigation-a">
+            Home
+        </a>
+        <a href="" class="header_navigation-a">
+            Files on mc
+        </a>
+        <a href="" class="header_navigation-a">
+            Features
+        </a>
+    </nav>
+
+    <nav class="header_user">
+        <a href="" class="header_user-a">
+            <img src="{% static 'images/user.png' %}" alt="">
+            Login
+        </a>
+    </nav>
+</header>
