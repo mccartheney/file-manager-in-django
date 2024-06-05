@@ -19,6 +19,11 @@
 /* ---- import files on mc_files section on landing page css ---- */
 @import url("/static/css/welcomePage/filesOnMc/filesOnMc.css");
 
+/* ---- import register page css ---- */
+@import url("/static/css/register/register.css");
+
+/* ---- import login page css ---- */
+@import url("/static/css/login/login.css");
 
 :root {
     overflow-x: hidden;
