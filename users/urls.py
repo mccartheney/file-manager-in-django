@@ -1,4 +1,5 @@
 from django.urls import path
+
 # import views to create urls
 from .views import login_view, register_view
 
