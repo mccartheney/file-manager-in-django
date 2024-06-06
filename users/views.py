@@ -11,8 +11,10 @@ from .forms import user_profile_form_register, user_profile_form_login
 
 # view to make a login
 def login_view (request) :
+    # if user is authenticated, redirect to main page of the application
     if request.user.is_authenticated :
         return redirect("/dashboard")
+        
     if request.method == "POST" : # if method is post
         # get and give post data to form
         request_data = request.POST
