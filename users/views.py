@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # import fucntion to login and authenticate user
 from django.contrib.auth import login, authenticate
@@ -11,6 +11,8 @@ from .forms import user_profile_form_register, user_profile_form_login
 
 # view to make a login
 def login_view (request) :
+    if request.user.is_authenticated :
+        return redirect("/dashboard")
     if request.method == "POST" : # if method is post
         # get and give post data to form
         request_data = request.POST
@@ -31,6 +33,9 @@ def login_view (request) :
                 if user : # if email and pass match
                     # login user
                     login (request, user)
+
+                    # on login redirect to main page of application
+                    return redirect ("/dashboard")
                 else : # if email and pass dont match
                     # warn user
                     warn_message = "⚠️ wrong credentials"
@@ -85,11 +90,13 @@ def register_view (request) :
                 new_user_profile.name = user_name_from_form
                 new_user_profile.email = user_email_from_form
                 new_user_profile.password = user_pass_from_form
-
                 new_user_profile.save()
 
+                # if user is created redirect to login page
+                return redirect("/user/login")
+
         # if form is not valid return login page again
-        return render (request, "users/registerPage.html")
+        return render (request, "users/registerPage.html", {"form" : form})
 
     else : # if method is get
         # return login page with formulary

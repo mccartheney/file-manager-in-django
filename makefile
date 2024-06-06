@@ -3,3 +3,5 @@ run-docker :
 
 run-local :
 	python manage.py runserver
+
+create-admin :
