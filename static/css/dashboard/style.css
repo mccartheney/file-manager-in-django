@@ -1,0 +1,33 @@
+/* ---- import reset css ---- */
+@import url("/static/css/reset/reset.css");
+
+/* ---- import fonts ---- */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+/* font-family: "Oswald",sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+/* font-family: "Lato",sans-serif; */
+
+:root {
+    overflow-x: hidden;
+
+    /* purples */
+    --dark-purple: #7946a8;
+    --medium-purple: #9263be;
+    --light-purple: #ab87cd;
+
+    /* grays */
+    --dark-gray: #222222;
+    --light-gray: #4d4a52;
+
+    /* white */
+    --white: #ffffff;
+}
+
+
+body {
+    background-color: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    margin: 10px;
+}

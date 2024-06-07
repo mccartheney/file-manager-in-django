@@ -1,0 +1,20 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard/sideBar/sideBar.css' %}">
+
+<div class="sideBar">
+    <div class="sideBar_logo">
+        {% include "logo.html" %}
+    </div>
+
+    <nav class="sideBar_nav">
+        <a href="/dashboard">
+            <img src="{% static 'images/dashboard.png'%}" />
+            Dashboard
+        </a>
+        <a href="/dashboard/folders">
+            <img src="{% static 'images/folder.png'%}" />
+            Folders
+        </a>
+    </nav>
+</div>

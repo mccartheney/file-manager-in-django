@@ -8,7 +8,7 @@
 @import url("/static/css/landingPage/logo/logo.css");
 
 /* ---- import reset css ---- */
-@import url("/static/css/landingPage/reset/reset.css");
+@import url("/static/css/reset/reset.css");
 
 /* ---- import header of landing page ---- */
 @import url("/static/css/landingPage/welcomePage/header/header.css");
