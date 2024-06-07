@@ -1,5 +1,6 @@
 {% load static %}
 
+
 <link rel="stylesheet" href="{% static 'css/dashboard/sideBar/sideBar.css' %}">
 
 <div class="sideBar">
@@ -8,11 +9,11 @@
     </div>
 
     <nav class="sideBar_nav">
-        <a href="/dashboard">
+        <a href="/dashboard" class="dashboard">
             <img src="{% static 'images/dashboard.png'%}" />
             Dashboard
         </a>
-        <a href="/dashboard/folders">
+        <a href="/dashboard/folders" class="folders">
             <img src="{% static 'images/folder.png'%}" />
             Folders
         </a>

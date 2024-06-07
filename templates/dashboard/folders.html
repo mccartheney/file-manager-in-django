@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}">
+    <title>Mc Files</title>
+
+    <style>
+        .folders {
+            background-color: var(--dark-gray);
+            color: var(--dark-purple);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="sideBar_area">
+        {% include 'dashboard/sideBar.html' %}
+    </div>
+    <div class="content_area">
+        <header>
+
+        </header>
+
+        <div class="content_area_fileManagement">
+            <div class="content_area_fileManagement_header">
+                <div class="content_area_fileManagement_header_title">
+
+                </div>
+
+                <div class="content_area_fileManagement_header_createArea">
+                    <div class="content_area_fileManagement_header_createArea_dropDown">
+                        <button>
+                            + Add new
+                        </button>
+                    </div>
+
+                    <div class="content_area_fileManagement_header_createArea_createFolder">
+                        <div class="content_area_fileManagement_header_createArea_createFolder_header">
+                            <h3>
+                                Add new Folder
+                            </h3>
+                            <p>
+                                create a new folder
+                            </p>
+                        </div>
+
+                        <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
+                            {% csrf_token %}
+                            <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
+                                <label for="folder_input">Name</label>
+                                <input type="text" name="folder_input" id="folder_input" placeholder="Folder name"/>
+                            </div>
+                            <div class="content_area_fileManagement_header_createArea_createFolder_form_bottom">
+                                <button class="cancel_folder_creation">
+                                    Cancel
+                                </button>
+                                <button type="submit" class="create_folder">
+                                    Create
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="content_area_fileManagement_header_createArea_uploadFile">
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="content_area_fileManagement_search">
+
+            </div>
+            <div class="content_area_fileManagement_manager">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
