@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 # import register and login forms
 from .forms import user_profile_form_register, user_profile_form_login
 
+from dashboard.models import master_folder
+
+from uuid import uuid4
+
 # view to make a login
 def login_view (request) :
     # if user is authenticated, redirect to main page of the application
@@ -83,7 +87,11 @@ def register_view (request) :
                 return render (request, "users/registerPage.html", {"warn_message" : warn_message, "form" : form})
             else : # if dont exist any user with email gived by them
                 # create new user with data gived by user
-                new_user = User.objects.create_user(username=f'{user_name_from_form} <{user_email_from_form}>', email=user_email_from_form, password=user_pass_from_form)
+                new_user = User.objects.create_user(
+                    username=f'{user_name_from_form} <{user_email_from_form}>', 
+                    email=user_email_from_form, 
+                    password=user_pass_from_form
+                )
                 new_user.save()
 
                 # create new user_profile with User created above and data gived by user
@@ -93,6 +101,13 @@ def register_view (request) :
                 new_user_profile.email = user_email_from_form
                 new_user_profile.password = user_pass_from_form
                 new_user_profile.save()
+
+                new_master_folder = master_folder.objects.create(
+                    User = new_user_profile,
+                    folder_id = str(uuid4()),
+                    folder_name = "root"
+                )
+                new_master_folder.save()
 
                 # if user is created redirect to login page
                 return redirect("/user/login")
