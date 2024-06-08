@@ -1,6 +1,5 @@
 .sideBar {
     background-color: var(--light-gray);
-    /* width: calc(100vw / 5); */
     height: 98vh;
     margin-left: 10px;
     border-radius: 10px;
