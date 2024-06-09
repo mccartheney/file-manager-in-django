@@ -6,10 +6,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/landingPage/style.css' %}">
+    <script src="{% static '/js/webComponents/landingPage/index.js' %}" type="module"></script>
     <title>File Manager</title>
 </head>
 <body>
-    {% include 'landingPage/header.html' %}
+    <header-component>
+        <img src="{% static 'images/user.png' %}" alt="" slot="loginImage" style="
+            width: 40px;
+            filter: invert();
+            margin-right: 15px;
+        ">
+    </header-component>
     {% include 'landingPage/welcome.html' %}
     {% include 'landingPage/filesOnMc.html' %}
 </body>
