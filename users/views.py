@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 # import register and login forms
 from .forms import user_profile_form_register, user_profile_form_login
 
-from dashboard.models import master_folder
+from dashboard.models import master_folder, folder
 
 from uuid import uuid4
 

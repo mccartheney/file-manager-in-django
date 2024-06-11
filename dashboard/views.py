@@ -22,12 +22,13 @@ def folders_dashboard (request) :
         if request.POST.get("folder_input"):
             folder_name = request.POST.get("folder_input")
             root_folder = user.profile.root_folder
-            print(root_folder)
             new_folder = folder.objects.create(
                 User = user_profile,
                 folder_name = folder_name,
                 folder_id = uuid4(),
                 parent_folder = root_folder
             )
+    folders = request.user.profile.root_folder.children_folder.all()
+    folders = reversed(folders)
     # render home page
-    return render (request, "dashboard/folders.html")
+    return render (request, "dashboard/folders.html", {"folders" : folders})

@@ -1,0 +1,47 @@
+.folder {
+    margin-bottom: 10px;
+    cursor: pointer;
+    width: 180px;
+    height: 120px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 5px;
+}
+
+.folder a {
+    text-decoration: none;
+    color: var(--white);
+    font-family: "lato", sans-serif;
+}
+
+.folder_folderImg{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.folder_folderImg img {
+    width: 50px;
+    margin-top: 10px;
+}
+
+.folder_folderName {
+    text-align: center;
+    font-size: 16px;
+}
+
+.folder_folderName p {
+    inline-size: 120px;
+    overflow-wrap: break-word;
+}
+
+.folder:hover {
+    background-color: var(--medium-gray);
+    transition: .5s;
+    transform: translateY(-5px);
+}

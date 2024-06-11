@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
 
     <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
@@ -96,7 +97,13 @@
     
                 </div>
                 <div class="content_area_fileManagement_manager">
-                    
+                    {% for folder in folders %}
+                        <folder-component
+                            folderTitle = "{{folder.folder_name}}"
+                            folderId = "{{folder.folder_id}}"
+                            folderImgSrc = "{% static '/images/folderIcon.png' %}"
+                        ></folder-component>
+                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -106,5 +113,6 @@
     <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
 </body>
 </html>

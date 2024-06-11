@@ -1,0 +1,6 @@
+.content_area_fileManagement_manager{
+    width: calc(100% - 50px);
+    margin-top: 80px;
+    display: flex;
+    flex-wrap: wrap;
+}

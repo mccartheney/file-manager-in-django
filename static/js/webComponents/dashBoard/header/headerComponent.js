@@ -10,7 +10,7 @@ class headerComponent extends HTMLElement{
     connectedCallback () {
         let userButton = this.shadow.querySelector(".header_dropdown_image");
         let options = this.shadow.querySelector(".header_dropdown_options")
-        console.log(userButton);
+
         userButton.addEventListener("click", () => {
             options.classList.toggle("hidden");
         })

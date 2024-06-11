@@ -18,7 +18,7 @@ class master_folder (models.Model) :
 # normal folder 
 class folder (models.Model) :
     # the creator of that folder
-    User = models.ForeignKey(user_profile, on_delete = models.CASCADE,related_name="children_folder")
+    User = models.ForeignKey(user_profile, on_delete = models.CASCADE,related_name="folders")
 
     # id and name of that folder
     folder_id = models.TextField()
