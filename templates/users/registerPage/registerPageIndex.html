@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/landingPage/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/users/register/register.css' %}">
     <title>Document</title>
 </head>
+
 <body>
     <div class="register_header">
-        <a href="/">
-            {% include 'logo.html' %}
-        </a>
+        <logo-component redirect="/" logoImgSrc="{% static '/images/logo_mc_files.png' %}">
+        </logo-component>
     </div>
 
     <form action="/user/register/" method="post" class="register_form">
         <div class="register_form_header">
             <h1>Welcome!</h1>
             <p>
-                Please  Register to continue
+                Please Register to continue
             </p>
         </div>
         {% csrf_token %}
@@ -27,9 +29,11 @@
             {{form.as_p}}
         </div>
         <button type="submit">
-            <img src="{% static 'images/register_user.png' %}"/>
+            <img src="{% static 'images/register_user.png' %}" />
             Register
         </button>
     </form>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
 </body>
+
 </html>

@@ -120,10 +120,10 @@
     align-items: flex-start;
     justify-content: flex-start;
 
-    top: -50px;
+    top: -20px;
     right: -30px;
     width: 400px;
-    height: 101vh;
+    height: 100vh;
     background-color: var(--light-gray);
 
     transform: translateX(0px) !important;

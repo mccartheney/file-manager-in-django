@@ -19,6 +19,7 @@
 }
 
 .filesOnMc_content_header h2 {
+    color: var(--white);
     line-height: 120px;
     border-bottom: 3px solid var(--dark-purple);
     font-size: 50px;
@@ -27,6 +28,7 @@
 }
 
 .filesOnMc_content_header p {
+    color: var(--white);
     font-size: 20px;
     margin-bottom: 30px;
     font-family: "latos", sans-serif;
@@ -78,6 +80,7 @@
 }
 
 .filesOnMc_content_pops_pop p {
+    color: var(--white);
     font-family: "latos", sans-serif;
     font-size: 15px;
     font-weight: 600;

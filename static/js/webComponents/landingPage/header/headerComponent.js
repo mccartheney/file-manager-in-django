@@ -16,6 +16,7 @@ class headerLandingPageComponent extends HTMLElement {
             </style>
 
             <div class="header_logo">
+                <logo-component redirect="/" logoImgSrc = "${this.getAttribute("logoImgSrc")}"></logo-component>  
             </div>
 
             <nav class="header_navigation">
@@ -32,8 +33,7 @@ class headerLandingPageComponent extends HTMLElement {
 
             <nav class="header_user">
                 <a href="/user/login/" class="header_user-a">
-                    <slot name="loginImage"></slot>
-                    <img src="{% static 'images/user.png' %}" alt="">
+                    <img src="${this.getAttribute("imgSrc")}" alt="">
                     Login
                 </a>
             </nav>
@@ -44,4 +44,4 @@ class headerLandingPageComponent extends HTMLElement {
     }
 }
 
-export default headerLandingPageComponent
+customElements.define("header-component", headerLandingPageComponent)

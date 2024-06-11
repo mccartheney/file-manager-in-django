@@ -15,4 +15,4 @@ class user_profile (models.Model) :
 
     # the name of the model
     def __str__(self) -> str:
-        return f'{self.name} <{self.email}>'
+        return f'{self.name} -{self.email}-'

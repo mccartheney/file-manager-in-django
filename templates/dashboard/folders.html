@@ -6,97 +6,101 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/dashboard/folders/folders.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
 
     <script src="{% static 'js/dashboard/folders/toggleFileAndFolderCreation.js' %}"></script>
 
     <title>Mc Files</title>
 
-    <style>
-        .folders {
-            background-color: var(--dark-gray);
-            color: var(--dark-purple);
-        }
-    </style>
-
 </head>
 
 <body>
-    <div class="sideBar_area">
-        {% include 'dashboard/sideBar.html' %}
-    </div>
-    <div class="content_area">
-        <header>
+    <div class="main_content">
 
-        </header>
-
-        <div class="content_area_fileManagement">
-            <div class="content_area_fileManagement_header">
-                <div class="content_area_fileManagement_header_title">
-                        <h3>
-                            Manage Files
-                        </h3>
-                </div>
-
-                <div class="content_area_fileManagement_header_createArea">
-                    <div class="content_area_fileManagement_header_createArea_dropDown">
-                        <button class="toggle_dropDown">
-                            <span> + </span> Add new
-                        </button>
-                        <div class="content_area_fileManagement_header_createArea_dropDown_options invisible">
-                            <button id="call_fileUpload">
-                                <img src="{% static 'images/folder_create.png' %}" alt="">
-                                Upload files
-                            </button>
-                            <button class="call_folderCreator">
-                                <img src="{% static 'images/file_create.png' %}" alt="">
-                                Create folder
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="content_area_fileManagement_header_createArea_createFolder hidden">
-                        <div class="content_area_fileManagement_header_createArea_createFolder_header">
+        <div class="sideBar_area">
+            <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
+                dashBoardImgSrc="{% static 'images/dashboard.png'%}" folderImgSrc="{% static 'images/folder.png'%}"
+                actualPage="folders">
+            </sidebar-component>
+        </div>
+        <div class="content_area">
+            <header>
+    
+            </header>
+    
+            <div class="content_area_fileManagement">
+                <div class="content_area_fileManagement_header">
+                    <div class="content_area_fileManagement_header_title">
                             <h3>
-                                Add new Folder
+                                Manage Files
                             </h3>
-                            <p>
-                                Create a new folder
-                            </p>
-                            <button class="close_folder_creation">
-                                x
+                    </div>
+    
+                    <div class="content_area_fileManagement_header_createArea">
+                        <div class="content_area_fileManagement_header_createArea_dropDown">
+                            <button class="toggle_dropDown">
+                                <span> + </span> Add new
                             </button>
-                        </div>
-
-                        <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
-                            {% csrf_token %}
-                            <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
-                                <label for="folder_input">Name</label>
-                                <input type="text" name="folder_input" id="folder_input" placeholder="Folder name"/>
-                            </div>
-                            <div class="content_area_fileManagement_header_createArea_createFolder_form_bottom">
-                                
-                                <button type="submit" class="create_folder">
-                                    Create
+                            <div class="content_area_fileManagement_header_createArea_dropDown_options invisible">
+                                <button id="call_fileUpload">
+                                    <img src="{% static 'images/folder_create.png' %}" alt="">
+                                    Upload files
+                                </button>
+                                <button class="call_folderCreator">
+                                    <img src="{% static 'images/file_create.png' %}" alt="">
+                                    Create folder
                                 </button>
                             </div>
-                        </form>
+                        </div>
+    
+                        <div class="content_area_fileManagement_header_createArea_createFolder hidden">
+                            <div class="content_area_fileManagement_header_createArea_createFolder_header">
+                                <h3>
+                                    Add new Folder
+                                </h3>
+                                <p>
+                                    Create a new folder
+                                </p>
+                                <button class="close_folder_creation">
+                                    x
+                                </button>
+                            </div>
+    
+                            <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
+                                {% csrf_token %}
+                                <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
+                                    <label for="folder_input">Name</label>
+                                    <input type="text" name="folder_input" id="folder_input" placeholder="Folder name"/>
+                                </div>
+                                <div class="content_area_fileManagement_header_createArea_createFolder_form_bottom">
+                                    
+                                    <button type="submit" class="create_folder">
+                                        Create
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+    
+                        <div class="content_area_fileManagement_header_createArea_uploadFile">
+    
+                        </div>
                     </div>
-
-                    <div class="content_area_fileManagement_header_createArea_uploadFile">
-
-                    </div>
+    
                 </div>
-
-            </div>
-            <div class="content_area_fileManagement_search">
-
-            </div>
-            <div class="content_area_fileManagement_manager">
-                
+                <div class="content_area_fileManagement_search">
+    
+                </div>
+                <div class="content_area_fileManagement_manager">
+                    
+                </div>
             </div>
         </div>
     </div>
+
+
+    <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
 </body>
 </html>

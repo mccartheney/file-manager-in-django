@@ -1,0 +1,57 @@
+class sideBarComponent extends HTMLElement {
+    constructor() {
+        super();
+
+        this.shadow = this.attachShadow({mode:"open"})
+        this.shadow.append(this.sideBarTemplate)
+        console.log(this.querySelector("div"))
+    }
+    
+    connectedCallback (){
+        let anchors = this.shadow.querySelectorAll("a");
+
+        anchors.forEach(anchor => {
+            let anchorClass = anchor.classList[0]
+            let actualPage = this.getAttribute("actualPage") 
+            if (actualPage == anchorClass) {
+                anchor.classList.add("activeAnchor")
+            }
+        });
+    }
+    
+    get sideBarTemplate () {
+        let sideBarDiv = document.createElement("div")
+        sideBarDiv.classList.add("sideBar");
+
+        sideBarDiv.innerHTML = `
+
+            <style>
+                @import url("/static/css/components/dashboard/sidebar.css")
+            </style>
+
+
+            <div class="sideBar_logo">
+                <logo-component 
+                    redirect="/dashboard" 
+                    logoImgSrc="${this.getAttribute("logoImgSrc")}">
+                </logo-component>
+            </div>
+
+            <nav class="sideBar_nav">
+                <a href="/dashboard" class="dashboard">
+                    <img src="${this.getAttribute('dashBoardImgSrc')}" />
+                    Dashboard
+                </a>
+                <a href="/dashboard/folders" class="folders">
+                    <img src="${this.getAttribute('folderImgSrc')}" />
+                    Folders
+                </a>
+            </nav>
+        
+        `
+
+        return sideBarDiv
+    }
+}
+
+customElements.define("sidebar-component", sideBarComponent)

@@ -47,6 +47,7 @@
     margin-bottom: 8px;
 }
 
+
 .login_form .login_form_inputs input {
     background-color: var(--dark-gray);
     border: 1px solid var(--dark-purple);

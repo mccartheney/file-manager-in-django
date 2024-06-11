@@ -45,22 +45,22 @@ def login_view (request) :
                 else : # if email and pass dont match
                     # warn user
                     warn_message = "⚠️ wrong credentials"
-                    return render (request, "users/loginPage.html", {"warn_message" : warn_message, "form" : form})
+                    return render (request, "users/loginPage/loginPageIndex.html", {"warn_message" : warn_message, "form" : form})
 
             except : # case dont exist user with email gived by user
                 # warn user
                 warn_message = "⚠️ Dont exist user with that email"
-                return render (request, "users/loginPage.html", {"warn_message" : warn_message, "form" : form})
+                return render (request, "users/loginPage/loginPageIndex.html", {"warn_message" : warn_message, "form" : form})
         
         # if form is not valid return login page again
-        return render (request, "users/loginPage.html", {"form" : form})
+        return render (request, "users/loginPage/loginPageIndex.html", {"form" : form})
 
     else : # if method is get
         # set formulary
         form = user_profile_form_login()
     
     # return login page with formulary
-    return render (request, "users/loginPage.html", {"form" : form})
+    return render (request, "users/loginPage/loginPageIndex.html", {"form" : form})
 
 # view to register user
 def register_view (request) :
@@ -88,7 +88,7 @@ def register_view (request) :
             else : # if dont exist any user with email gived by them
                 # create new user with data gived by user
                 new_user = User.objects.create_user(
-                    username=f'{user_name_from_form} <{user_email_from_form}>', 
+                    username=f'{user_name_from_form} -{user_email_from_form}-', 
                     email=user_email_from_form, 
                     password=user_pass_from_form
                 )
@@ -113,11 +113,11 @@ def register_view (request) :
                 return redirect("/user/login")
 
         # if form is not valid return login page again
-        return render (request, "users/registerPage.html", {"form" : form})
+        return render (request, "users/registerPage/registerPageIndex.html", {"form" : form})
 
     else : # if method is get
         # return login page with formulary
         form = user_profile_form_register()
 
     # return register page with form
-    return render (request, "users/registerPage.html", {"form" : form})
+    return render (request, "users/registerPage/registerPageIndex.html", {"form" : form})

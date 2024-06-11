@@ -6,15 +6,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/landingPage/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/users/login/login.css' %}">
     <title>Document</title>
 </head>
 
 <body>
     <div class="login_header">
-        <a href="/">
-            {% include 'logo.html' %}
-        </a>
+        <logo-component 
+            redirect="/" 
+            logoImgSrc="{% static '/images/logo_mc_files.png' %}">
+        </logo-component>
     </div>
 
     <form action="/user/login/" method="post" class="login_form">
@@ -33,6 +35,8 @@
             Register
         </button>
     </form>
+
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
 </body>
 
 </html>

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/dashboard/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/dashboard.css' %}">
     <title>Mc Files</title>
 
     <style>
@@ -17,8 +18,20 @@
 
 </head>
 <body>
-    <div class="sideBar_area">
-        {%  include 'dashboard/sideBar.html' %}
+    <div class="main_content">
+        <div class="sideBar_area">
+            <sidebar-component
+            logoImgSrc="{% static '/images/logo_mc_files.png' %}"
+            dashBoardImgSrc="{% static 'images/dashboard.png'%}"
+            folderImgSrc = "{% static 'images/folder.png'%}"
+            actualPage = "dashboard"
+            >
+            </sidebar-component>
+        </div>
     </div>
+
+    <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+
 </body>
 </html>

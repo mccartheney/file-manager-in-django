@@ -1,5 +1,6 @@
 .sideBar {
     background-color: var(--light-gray);
+    width: 320px;
     height: 98vh;
     margin-left: 10px;
     border-radius: 10px;
@@ -46,4 +47,9 @@
     margin-right: 20px;
     width: 18px;
     filter: invert();
+}
+
+.activeAnchor {
+    background-color: var(--dark-gray);
+    color: var(--dark-purple);
 }

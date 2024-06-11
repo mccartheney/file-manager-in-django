@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <title>File Manager</title>
+</head>
+<body>
+    <header-component 
+        imgSrc = "{% static '/images/user.png' %}"
+        logoImgSrc = "{% static '/images/logo_mc_files.png' %}"
+    ></header-component>
+    <welcome-component 
+        imgSrc = "{% static '/images/logo_mc_files.png' %}" 
+    ></welcome-component>
+    <files-on-mc-component
+        lock="{% static 'images/lock.png' %}"
+        register = "{% static 'images/register_user.png' %}"
+        upload = "{% static 'images/upload.png' %}"
+    ></files-on-mc-component>
+
+
+    <script src="{% static '/js/webComponents/landingPage/filesOnMc/fileOnMcComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/landingPage/header/headerComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/landingPage/welcome/welcomeComponent.js' %}"></script>
+</body>
+</html>
