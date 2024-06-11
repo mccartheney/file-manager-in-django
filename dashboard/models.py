@@ -29,7 +29,7 @@ class folder (models.Model) :
 
     # how the model will be showed
     def __str__(self) -> str:
-        return f'{self.folder_name} < {self.User} >'
+        return f'{self.folder_name} - {self.User} -'
 
 class file (models.Model) :
     pass

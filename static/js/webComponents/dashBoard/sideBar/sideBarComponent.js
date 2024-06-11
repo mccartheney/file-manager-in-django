@@ -4,7 +4,6 @@ class sideBarComponent extends HTMLElement {
 
         this.shadow = this.attachShadow({mode:"open"})
         this.shadow.append(this.sideBarTemplate)
-        console.log(this.querySelector("div"))
     }
     
     connectedCallback (){

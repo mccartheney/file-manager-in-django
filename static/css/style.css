@@ -17,12 +17,12 @@
 
     /* grays */
     --dark-gray: #222222;
+    --medium-gray: #383838;
     --light-gray: #4d4a52;
 
     /* white */
     --white: #ffffff;
 }
-
 
 body {
     background-color: var(--dark-gray);

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
 
-    <script src="{% static 'js/dashboard/folders/toggleFileAndFolderCreation.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
 
     <title>Mc Files</title>
 
@@ -26,9 +26,12 @@
             </sidebar-component>
         </div>
         <div class="content_area">
-            <header>
-    
-            </header>
+            <header-component
+                title="File Management"
+                userImage="{% static 'images/user.png' %}"
+                settingIcon="{% static 'images/setting.png' %}"
+                logOutIcon="{% static 'images/logout.png' %}"
+            ></header-component>
     
             <div class="content_area_fileManagement">
                 <div class="content_area_fileManagement_header">
@@ -102,5 +105,6 @@
 
     <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
 </body>
 </html>
