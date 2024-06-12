@@ -35,7 +35,9 @@ def folders_dashboard (request) :
                 
             if exists_folder_with_same_name :
                 warn_message = "You already have folders with that name, try other name"
+                print(folders)
                 return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message})
+
 
             new_folder = folder.objects.create(
                 User = user_profile,
@@ -44,7 +46,11 @@ def folders_dashboard (request) :
                 parent_folder = root_folder
             )
 
-    
+    folders = root_folder.children_folder.all()
+    if folders :
+        folders = reversed(folders)
+
+
     # render home page
     return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name})
 
