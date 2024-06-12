@@ -25,7 +25,7 @@ class folder (models.Model) :
     folder_name = models.TextField(max_length=100)
 
     # parent folder of that folder (witch folder that folder is inside)
-    parent_folder = models.ForeignKey(master_folder, on_delete=models.CASCADE, related_name="children_folder")
+    parent_folder = models.ForeignKey('self', on_delete=models.CASCADE, related_name="children_folder", null=True, blank=True)
 
     # how the model will be showed
     def __str__(self) -> str:

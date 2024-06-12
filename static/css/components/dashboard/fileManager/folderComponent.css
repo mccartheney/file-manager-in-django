@@ -15,6 +15,8 @@
     text-decoration: none;
     color: var(--white);
     font-family: "lato", sans-serif;
+    width: 100%;
+    height: 100%;
 }
 
 .folder_folderImg{
@@ -28,6 +30,7 @@
 .folder_folderImg img {
     width: 50px;
     margin-top: 10px;
+    margin-left: 35%;
 }
 
 .folder_folderName {
@@ -38,6 +41,7 @@
 .folder_folderName p {
     inline-size: 120px;
     overflow-wrap: break-word;
+    width: 180px;
 }
 
 .folder:hover {

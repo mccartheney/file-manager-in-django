@@ -97,13 +97,33 @@
     
                 </div>
                 <div class="content_area_fileManagement_manager">
-                    {% for folder in folders %}
-                        <folder-component
-                            folderTitle = "{{folder.folder_name}}"
-                            folderId = "{{folder.folder_id}}"
-                            folderImgSrc = "{% static '/images/folderIcon.png' %}"
-                        ></folder-component>
-                    {% endfor %}
+                    <div class="content_area_fileManagement_manager_title">
+                        <h2>
+                            {{folder_name}}
+                        </h2>
+                        <p>
+                            {{warn_message}}
+                        </p>
+                    </div>
+                    {%if folders%}
+                    <div class="content_area_fileManagement_manager_title_folders">
+                        {% for folder in folders %}
+                        <folder-component folderTitle="{{folder.folder_name}}" folderId="{{folder.folder_id}}"
+                            folderImgSrc="{% static '/images/folderIcon.png' %}">
+                        </folder-component>
+                        {% endfor %}
+                    </div>
+                    {%else%}
+                    <div class="content_area_fileManagement_manager_title_emptyFolders">
+                        <img src="{% static 'images/nothing_found.png'%}" />
+                        <h2>
+                            Nothing Here ...
+                        </h2>
+                        <p>
+                            Create folders or upload some files to see them here !
+                        </p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

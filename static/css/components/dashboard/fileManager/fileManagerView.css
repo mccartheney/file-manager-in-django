@@ -1,6 +1,66 @@
 .content_area_fileManagement_manager{
     width: calc(100% - 50px);
     margin-top: 80px;
+}
+
+.content_area_fileManagement_manager_title {
+    font-family: "Oswald", sans-serif;
+    color: var(--white);
+    margin-left: 10px;
+    font-size: 45px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1;
+}
+
+.content_area_fileManagement_manager_title a {
+    margin-right: 20px;
+}
+
+.content_area_fileManagement_manager_title p {
+    color: var(--light-purple);
+    font-size: 18px;
+}
+
+.content_area_fileManagement_manager_title button {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+}
+
+.content_area_fileManagement_manager_title img{ 
+    width: 40px;
+    filter: invert();
+}
+
+.content_area_fileManagement_manager_title_folders{
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
+}
+
+.content_area_fileManagement_manager_title_emptyFolders {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+    color: var(--white);
+}
+
+.content_area_fileManagement_manager_title_emptyFolders h2 {
+    margin: 30px;
+    font-family: "Oswald", sans-serif;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.content_area_fileManagement_manager_title_emptyFolders p {
+    font-family: "lato", sans-serif;
+}
+
+.content_area_fileManagement_manager_title_emptyFolders img {
+    width: 300px;
 }

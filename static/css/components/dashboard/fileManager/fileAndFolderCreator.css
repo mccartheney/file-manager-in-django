@@ -79,6 +79,7 @@
     border-radius: 10px;
     margin-left: -50px;
     padding: 2px;
+    z-index: 2;
 }
 
 .content_area_fileManagement_header_createArea_dropDown_options button {

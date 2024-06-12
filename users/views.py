@@ -102,7 +102,7 @@ def register_view (request) :
                 new_user_profile.password = user_pass_from_form
                 new_user_profile.save()
 
-                new_master_folder = master_folder.objects.create(
+                new_master_folder = folder.objects.create(
                     User = new_user_profile,
                     folder_id = str(uuid4()),
                     folder_name = "root"
