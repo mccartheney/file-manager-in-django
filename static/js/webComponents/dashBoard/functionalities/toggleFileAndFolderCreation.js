@@ -5,7 +5,6 @@ window.onload = () => {
     let typeOfCreation = document.querySelector(".content_area_fileManagement_header_createArea_dropDown_options")
 
     document.querySelector(".toggle_dropDown").onclick = () => {
-
         typeOfCreation.classList.toggle("invisible")
     }
 

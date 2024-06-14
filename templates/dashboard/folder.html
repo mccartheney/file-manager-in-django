@@ -19,8 +19,8 @@
         <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
         <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
         <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
-    
-        <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderRemove.css' %}">
+        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
     
         <title>Mc Files</title>
     
@@ -64,6 +64,36 @@
                                     </button>
                                 </div>
                             </div>
+
+                            <div class="content_area_fileManagement_header_createArea_createFolder_editFolder hidden">
+                                <div class="content_area_fileManagement_header_createArea_editFolder_header">
+                                    <h3>
+                                        Edit Folder
+                                    </h3>
+                                    <p>
+                                        Edit name of <span class="editFolder_name"></span>
+                                    </p>
+                                    <button class="close_folder_edit">
+                                        x
+                                    </button>
+                                </div>
+                            
+                                <form action="/dashboard/folders/{{ folder_id }}" class="content_area_fileManagement_header_createArea_editFolder_form"
+                                    method="post">
+                                    {% csrf_token %}
+                                    <div class="content_area_fileManagement_header_createArea_editFolder_form_top">
+                                        <label for="folder_input">Name</label>
+                                        <input type="text" name="folder_to_rename" id="folder_input" placeholder="Folder name" />
+                                        <input type="text" name="folder_id_to_rename" id="folder_id_to_rename" hidden placeholder="Folder name" />
+                                    </div>
+                                    <div class="content_area_fileManagement_header_createArea_editFolder_form_bottom">
+                            
+                                        <button type="submit" class="edit_folder">
+                                            Edit
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
     
                             <div class="content_area_fileManagement_header_createArea_createFolder hidden">
                                 <div class="content_area_fileManagement_header_createArea_createFolder_header">
@@ -85,6 +115,7 @@
                                         <label for="folder_input">Name</label>
                                         <input type="text" name="folder_input" id="folder_input"
                                             placeholder="Folder name" />
+                                        
                                     </div>
                                     <div class="content_area_fileManagement_header_createArea_createFolder_form_bottom">
     
@@ -125,7 +156,10 @@
                                     <folder-component 
                                         folderTitle="{{folder.folder_name}}" 
                                         folderId="{{folder.folder_id}}"
-                                        folderImgSrc="{% static '/images/folderIcon.png' %}">
+                                        folderImgSrc="{% static '/images/folderIcon.png' %}"
+                                        deleteIcon ="{% static '/images/delete.png' %}"
+                                        editIcon="{% static '/images/edit.png' %}"
+                                        >
                                     </folder-component>
                                 {% endfor %}
                             </div>
@@ -146,11 +180,38 @@
             </div>
         </div>
     
+        <div class="removeFolder invisible">
+            <div class="removeFolder_content">
+                <div class="removeFolder_content_header">
+                    <h2>
+                        Do you want to delete <span class="folderToRemove"></span> ?
+                    </h2>
+                    <p>
+                        ⚠️ This action is irreversible and will delete everything inside that folder !
+                    </p>
+                </div>
+                <div class="removeFolder_content_buttons">
+                    <form action="/dashboard/folders/{{ folder_id }}" method="post" class="removeFolder_content_form">
+                        {% csrf_token %}
+                        <input hidden value="id_of_folder" id="folder_to_remove" name="folder_to_remove" />
+                        <button type="submit">
+                            Delete Folder
+                        </button>
+                    </form>
+                    <button class="removeFolder_content_buttons-button">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
     
         <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
         <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
         <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
         <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
+        <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
+        <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
+
     </body>
     
     </html>

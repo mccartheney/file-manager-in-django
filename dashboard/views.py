@@ -29,6 +29,29 @@ def folders_dashboard (request) :
         user = request.user
         user_profile = user.profile
 
+        if request.POST.get("folder_to_rename") :
+            folder_id_to_rename = request.POST.get ("folder_id_to_rename")
+            folder_to_rename = user_profile.folders.all().filter(folder_id = folder_id_to_rename)[0]
+            folder_to_rename.folder_name = request.POST.get("folder_to_rename")
+
+            folder_to_rename.save()
+
+            folders = root_folder.children_folder.all()
+            folders = reversed(folders)
+
+            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name})
+
+        if request.POST.get("folder_to_remove"):
+            folder_id_to_delete = request.POST.get("folder_to_remove")
+            folder_to_delete = user_profile.folders.all().filter(folder_id = folder_id_to_delete)
+
+            folder_to_delete.delete()
+
+            folders = root_folder.children_folder.all()
+            folders = reversed(folders)
+
+            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name})
+
         if request.POST.get("folder_input"):
             folder_name = request.POST.get("folder_input")
             exists_folder_with_same_name = root_folder.children_folder.all().filter(folder_name = folder_name)
@@ -75,7 +98,35 @@ def folder_dashboard (request, slug) :
         folder_name = request.POST.get("folder_input")
         parent_folder = this_folder
         exists_folder_with_same_name = this_folder.children_folder.all().filter(folder_name = folder_name)
-        
+        print("on post")
+        print(request.POST)
+        if request.POST.get("folder_to_rename") :
+            print("on rename")
+            folder_id_to_rename = request.POST.get ("folder_id_to_rename")
+            folder_to_rename = folders.filter(folder_id = folder_id_to_rename)[0]
+            folder_to_rename.folder_name = request.POST.get("folder_to_rename")
+
+            folder_to_rename.save()
+
+            folders = this_folder.children_folder.all()
+            folders = reversed(folders)
+
+            print(this_folder.folder_name)
+
+            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : this_folder.folder_name})
+
+
+        if request.POST.get("folder_to_remove"):
+            print("on remove")
+            folder_id_to_delete = request.POST.get("folder_to_remove")
+            folder_to_delete = folders.filter(folder_id = folder_id_to_delete)
+            folder_to_delete.delete()
+            folders = this_folder.children_folder.all()
+            folders = reversed(folders)
+
+            return render (request, "dashboard/folder.html", {"folders":folders, "folder_name" : this_folder_name})
+
+
         if exists_folder_with_same_name :
             warn_message = "You already have folders with that name, try other name"
             return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "warn_message":warn_message})
