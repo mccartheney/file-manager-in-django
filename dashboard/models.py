@@ -32,4 +32,14 @@ class folder (models.Model) :
         return f'{self.folder_name} - {self.User} -'
 
 class file (models.Model) :
-    pass
+    User = models.ForeignKey(user_profile, on_delete=models.CASCADE, related_name="files")
+
+    file = models.FileField ()
+    file_id = models.TextField()
+    file_visibleName = models.TextField(max_length=100)
+    file_Name = models.TextField(max_length=100)
+
+    parent_folder = models.ForeignKey(folder, on_delete=models.CASCADE, related_name="children_files")
+
+    def __str__(self) -> str:
+        return f'{self.file_name} <{self.parent_folder} [{self.file_id}]>'

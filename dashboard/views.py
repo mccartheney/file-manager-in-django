@@ -10,6 +10,7 @@ from uuid import uuid4
 # import login required to make pages login required
 from django.contrib.auth.decorators import login_required
 
+from .forms import file_form
 
 # view to homepage to dashboard
 @login_required(login_url="/user/login")
@@ -81,7 +82,10 @@ def folders_dashboard (request) :
             # get how many folder with the same name exists
             exists_folder_with_same_name = root_folder.children_folder.all().filter(folder_name = folder_name)
                 
-            
+            # get all folders inside root folder
+            folders = root_folder.children_folder.all()
+            folders = reversed(folders)
+
             if exists_folder_with_same_name : # if exist any folder with the same name, warn it to user
                 warn_message = "You already have folders with that name, try other name"
 
@@ -102,8 +106,10 @@ def folders_dashboard (request) :
     if folders : # if have folders, invert them
         folders = reversed(folders)
 
+    upload_file_form = file_form()
+
     # return html page with necessary data
-    return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name})
+    return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form})
 
 # view to file manager (not on root folder)
 @login_required(login_url="/user/login")
@@ -125,7 +131,11 @@ def folder_dashboard (request, slug) :
     folders = this_folder.children_folder.all()
     
     # get a parent id to go to them on press return button
-    parent_id = this_folder.parent_folder
+    parent_id = this_folder.parent_folder.folder_id
+    print(parent_id)
+
+    if this_folder.parent_folder.parent_folder == None :
+        parent_id = ""
 
     if (request.method == "POST") : # if user sent something 
         if request.POST.get("folder_to_rename") : # if user send a folder to rename

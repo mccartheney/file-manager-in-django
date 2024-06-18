@@ -14,7 +14,6 @@ class folderComponent extends HTMLElement {
         let deleteFolderWindow = document.querySelector(".removeFolder")
 
         removeButton.addEventListener("click", () => {
-
             document.querySelector("#folder_to_remove").value = this.getAttribute("folderId")
             let spanToAddFolderName = document.querySelector(".folderToRemove");
             spanToAddFolderName.textContent = this.getAttribute("folderTitle")
