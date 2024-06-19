@@ -12,6 +12,7 @@
 
     position: relative;
     transition: .5s;
+    margin: 5px;
 }
 
 .folder a {
@@ -91,4 +92,9 @@
 .editButton img {
     width: 20px;
     filter: invert();
+}
+
+.invisible {
+    display: none;
+    transition: 1s;
 }

@@ -33,6 +33,16 @@ class folderComponent extends HTMLElement {
             editFolderWindow.classList.add("hidden")
         })
 
+        this.shadow.querySelector(".folder").addEventListener("mouseover",() => {
+            removeButton.classList.remove("invisible")
+            editButton.classList.remove("invisible")
+        })
+
+        this.shadow.querySelector(".folder").addEventListener("mouseout", () => {
+            removeButton.classList.add("invisible")
+            editButton.classList.add("invisible")
+        })
+
     }
 
     get folderTemplate () {
@@ -55,10 +65,10 @@ class folderComponent extends HTMLElement {
                     </p>
                 <div>
             </a>
-            <button class="removeButton">
+            <button class="removeButton invisible">
                 <img src = "${this.getAttribute("deleteIcon")}"/>
             </button>    
-            <button class="editButton">
+            <button class="editButton invisible">
                 <img src = "${this.getAttribute("editIcon")}"/>
             </button>    
         `

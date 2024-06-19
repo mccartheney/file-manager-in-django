@@ -34,10 +34,10 @@ class folder (models.Model) :
 class file (models.Model) :
     User = models.ForeignKey(user_profile, on_delete=models.CASCADE, related_name="files")
 
-    file = models.FileField ()
+    file = models.FileField (upload_to='uploads/')
     file_id = models.TextField()
-    file_visibleName = models.TextField(max_length=100)
-    file_Name = models.TextField(max_length=100)
+    file_visible_name = models.TextField(max_length=100)
+    file_name = models.TextField(max_length=100)
 
     parent_folder = models.ForeignKey(folder, on_delete=models.CASCADE, related_name="children_files")
 

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderRemove.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileRemove.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
 
 
@@ -73,7 +74,7 @@
                                 </button>
                             </div>
                         
-                            <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_uploadFile_form"
+                            <form action="/dashboard/folders/" enctype="multipart/form-data" class="content_area_fileManagement_header_createArea_uploadFile_form"
                                 method="post">
                                 {% csrf_token %}
                                 <div class="content_area_fileManagement_header_createArea_uploadFile_form_top">
@@ -170,7 +171,7 @@
                             {{warn_message}}
                         </p>
                     </div>
-                    {%if folders%}
+                    {%if folders or files%}
                         <div class="content_area_fileManagement_manager_title_folders">
                             {% for folder in folders %}
                             <folder-component 
@@ -181,6 +182,16 @@
                                 editIcon="{% static '/images/edit.png' %}"
                             >
                             </folder-component>
+                            {% endfor %}
+
+                            {% for file in files%}
+                                <file-component
+                                    fileUrl="{{file.file.url}}" 
+                                    fileTitle="{{file.file_name}}" 
+                                    fileId="{{file.file_id}}"
+                                    fileImgSrc="{% static '/images/files.png' %}" 
+                                    deleteIcon="{% static '/images/delete.png' %}">
+                                </file-component>
                             {% endfor %}
                         </div>
                     {%else%}
@@ -195,6 +206,31 @@
                         </div>
                     {% endif %}
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="removeFile invisible">
+        <div class="removeFile_content">
+            <div class="removeFile_content_header">
+                <h2>
+                    Do you want to delete <span class="fileToRemove"></span> ?
+                </h2>
+                <p>
+                    ⚠️ This action is irreversible and will delete that File !
+                </p>
+            </div>
+            <div class="removeFile_content_buttons">
+                <form action="/dashboard/folders/" method="post" class="removeFile_content_form">
+                    {% csrf_token %}
+                    <input hidden value="id_of_File" id="File_to_remove" name="file_to_remove" />
+                    <button type="submit">
+                        Delete File
+                    </button>
+                </form>
+                <button class="removeFile_content_buttons-button">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -228,6 +264,7 @@
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/folder/fileComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
 

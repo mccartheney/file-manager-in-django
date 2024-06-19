@@ -15,12 +15,13 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
-        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
-        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
-        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderRemove.css' %}">
-        <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderRemove.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileRemove.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
     
         <title>Mc Files</title>
     
@@ -78,7 +79,9 @@
                                     </button>
                                 </div>
                             
-                                <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_uploadFile_form"
+                                <form action="/dashboard/folders/{{ folder_id }}" 
+                                enctype="multipart/form-data" 
+                                class="content_area_fileManagement_header_createArea_uploadFile_form"
                                     method="post">
                                     {% csrf_token %}
                                     <div class="content_area_fileManagement_header_createArea_uploadFile_form_top">
@@ -185,17 +188,24 @@
                                 </button>
                             </a>
                         </div>
-                        {%if folders%}
+                        {%if folders or files%}
                             <div class="content_area_fileManagement_manager_title_folders">
                                 {% for folder in folders %}
-                                    <folder-component 
-                                        folderTitle="{{folder.folder_name}}" 
-                                        folderId="{{folder.folder_id}}"
-                                        folderImgSrc="{% static '/images/folderIcon.png' %}"
-                                        deleteIcon ="{% static '/images/delete.png' %}"
-                                        editIcon="{% static '/images/edit.png' %}"
-                                        >
-                                    </folder-component>
+                                <folder-component folderTitle="{{folder.folder_name}}" 
+                                    folderId="{{folder.folder_id}}"
+                                    folderImgSrc="{% static '/images/folderIcon.png' %}" 
+                                    deleteIcon="{% static '/images/delete.png' %}"
+                                    editIcon="{% static '/images/edit.png' %}">
+                                </folder-component>
+                                {% endfor %}
+                            
+                                {% for file in files%}
+                                <file-component
+                                    fileUrl="{{file.file.url}}" 
+                                    fileTitle="{{file.file_name}}" 
+                                    fileId="{{file.file_id}}"
+                                    fileImgSrc="{% static '/images/files.png' %}" deleteIcon="{% static '/images/delete.png' %}">
+                                </file-component>
                                 {% endfor %}
                             </div>
                         {%else%}
@@ -214,7 +224,32 @@
                 </div>
             </div>
         </div>
-    
+
+        <div class="removeFile invisible">
+            <div class="removeFile_content">
+                <div class="removeFile_content_header">
+                    <h2>
+                        Do you want to delete <span class="fileToRemove"></span> ?
+                    </h2>
+                    <p>
+                        ⚠️ This action is irreversible and will delete that File !
+                    </p>
+                </div>
+                <div class="removeFile_content_buttons">
+                    <form action="/dashboard/folders/{{ folder_id }}" method="post" class="removeFile_content_form">
+                        {% csrf_token %}
+                        <input hidden value="id_of_File" id="File_to_remove" name="file_to_remove" />
+                        <button type="submit">
+                            Delete File
+                        </button>
+                    </form>
+                    <button class="removeFile_content_buttons-button">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <div class="removeFolder invisible">
             <div class="removeFolder_content">
                 <div class="removeFolder_content_header">
@@ -240,13 +275,13 @@
             </div>
         </div>
     
-        <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
-        <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
-        <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
-        <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
-        <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
-        <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
-
+            <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+            <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+            <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
+            <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
+            <script src="{% static 'js/webComponents/dashBoard/folder/fileComponent.js' %}"></script>
+            <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
+            <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
     </body>
     
     </html>

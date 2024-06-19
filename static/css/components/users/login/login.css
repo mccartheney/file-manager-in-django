@@ -83,3 +83,16 @@
     margin-right: 20px;
     filter: invert();
 }
+
+.login_form a{
+    color: var(--white);
+    font-family: "latos", sans-serif;
+    font-size: 15px;
+    margin-top: 50px;
+    text-decoration: none;
+    transition: .5s;
+}
+.login_form a:hover{
+    color: var(--dark-purple);
+    transition: .5s;
+}

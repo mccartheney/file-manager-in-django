@@ -1,4 +1,5 @@
-from django.forms import forms
+from django import forms
 
 class file_form (forms.Form) :
-    file = forms.FileField () 
+        files = forms.FileField()
+

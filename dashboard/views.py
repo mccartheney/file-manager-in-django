@@ -12,10 +12,14 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import file_form
 
+from .models import file
+
 # view to homepage to dashboard
 @login_required(login_url="/user/login")
 def home_dashboard (request) :
-
+    for x in request.user.profile.files.all() :
+        print(f"the file {x.file} have the size of {round(x.file.size /100000, 2)} mb")
+        
     # render home page
     return render (request, "dashboard/index.html")
 
@@ -29,11 +33,32 @@ def folders_dashboard (request) :
     root_folder = request.user.profile.folders.all().filter(parent_folder = None).filter(folder_name="root")[0]
     root_folder_name = root_folder.folder_name
 
+    children_files = root_folder.children_files.all()
+
+
     if request.method == "POST" : # if user send something
 
         # get user and user profile to link the file or the folder to them  
         user = request.user
         user_profile = user.profile
+
+        if request.POST.get("file_to_remove") :
+
+            id_file_to_delete = request.POST.get("file_to_remove")
+            folder_to_delete = children_files.filter(file_id = id_file_to_delete)[0]
+
+            folder_to_delete.delete()
+
+            # get all folders inside root folder
+            folders = root_folder.children_folder.all()
+            folders = reversed(folders)
+
+            children_files = root_folder.children_files.all()
+
+            upload_file_form = file_form()
+
+            # return html page with necessary data
+            return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
 
         if request.POST.get("folder_to_rename") : # if the user send a new name to a folder
 
@@ -53,10 +78,14 @@ def folders_dashboard (request) :
             folders = root_folder.children_folder.all()
             folders = reversed(folders)
 
-            # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name})
+            children_files = root_folder.children_files.all()
 
-        if request.POST.get("folder_to_remove"): # if user send a folder to remove
+            upload_file_form = file_form()
+
+            # return html page with necessary data
+            return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+
+        elif request.POST.get("folder_to_remove"): # if user send a folder to remove
             
             # get the necessary data to remove that folder:
 
@@ -72,16 +101,23 @@ def folders_dashboard (request) :
             folders = root_folder.children_folder.all()
             folders = reversed(folders)
 
-            # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name})
 
-        if request.POST.get("folder_input"): # if user send a folder to create
+            upload_file_form = file_form()
+
+            # return html page with necessary data
+            return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+
+        elif request.POST.get("folder_input"): # if user send a folder to create
 
             # get the name of the new folder
             folder_name = request.POST.get("folder_input")
             # get how many folder with the same name exists
             exists_folder_with_same_name = root_folder.children_folder.all().filter(folder_name = folder_name)
                 
+            children_files = root_folder.children_files.all()
+
+            upload_file_form = file_form()
+
             # get all folders inside root folder
             folders = root_folder.children_folder.all()
             folders = reversed(folders)
@@ -90,7 +126,7 @@ def folders_dashboard (request) :
                 warn_message = "You already have folders with that name, try other name"
 
                 # return html page with necessary data
-                return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message})
+                return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
 
             # create the new folder
             new_folder = folder.objects.create(
@@ -99,6 +135,31 @@ def folders_dashboard (request) :
                 folder_id = uuid4(),
                 parent_folder = root_folder
             )
+
+            children_files = root_folder.children_files.all()
+
+            upload_file_form = file_form()
+
+            # get all folders inside root folder
+            folders = root_folder.children_folder.all()
+            folders = reversed(folders)
+
+            # return html page with necessary data
+            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+        
+        else :
+            file_from_user =request.FILES["files"]
+            file_name_from_user = str(request.FILES["files"])
+
+            new_file = file.objects.create(
+                User = user_profile,
+                file = file_from_user,
+                file_id = uuid4(),
+                file_visible_name = file_name_from_user,
+                file_name = file_name_from_user,
+                parent_folder = root_folder
+            )
+       
 
 
     # get all folders inside root folder
@@ -109,7 +170,7 @@ def folders_dashboard (request) :
     upload_file_form = file_form()
 
     # return html page with necessary data
-    return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form})
+    return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
 
 # view to file manager (not on root folder)
 @login_required(login_url="/user/login")
@@ -127,9 +188,13 @@ def folder_dashboard (request, slug) :
     this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
     this_folder_name = this_folder.folder_name
 
+    children_files = this_folder.children_files.all()
+
     # get all folder inside the folder the user are in
     folders = this_folder.children_folder.all()
-    
+
+    upload_file_form = file_form()
+
     # get a parent id to go to them on press return button
     parent_id = this_folder.parent_folder.folder_id
     print(parent_id)
@@ -138,6 +203,28 @@ def folder_dashboard (request, slug) :
         parent_id = ""
 
     if (request.method == "POST") : # if user sent something 
+        print(request.FILES)
+        if request.POST.get("file_to_remove") :
+
+            id_file_to_delete = request.POST.get("file_to_remove")
+            file_to_delete = children_files.filter(file_id = id_file_to_delete)[0]
+
+            file_to_delete.delete()
+
+            # get actual folder and folder name by id
+            this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
+            this_folder_name = this_folder.folder_name
+
+            children_files = this_folder.children_files.all()
+
+            upload_file_form = file_form()
+
+            # return html page with necessary data
+
+            return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
+
+
+
         if request.POST.get("folder_to_rename") : # if user send a folder to rename
             
             # get the necessary data to rename that folder:
@@ -153,12 +240,17 @@ def folder_dashboard (request, slug) :
             # save the changes
             folder_to_rename.save()
 
-            # get folder inside the actual folder
-            folders = this_folder.children_folder.all()
-            folders = reversed(folders)
+           # get actual folder and folder name by id
+            this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
+            this_folder_name = this_folder.folder_name
+
+            children_files = this_folder.children_files.all()
+
+            upload_file_form = file_form()
 
             # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : this_folder.folder_name})
+
+            return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
 
 
         if request.POST.get("folder_to_remove"): # if user send a folder to remove
@@ -173,35 +265,65 @@ def folder_dashboard (request, slug) :
             # delete that folder
             folder_to_delete.delete()
 
-            # get folders inside that folders
-            folders = this_folder.children_folder.all()
-            folders = reversed(folders)
+            # get actual folder and folder name by id
+            this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
+            this_folder_name = this_folder.folder_name
+
+            children_files = this_folder.children_files.all()
+
+            upload_file_form = file_form()
 
             # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : this_folder_name})
 
-        # get folder name to create
-        folder_name = request.POST.get("folder_input")
+            return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
 
-        # set parent folder the actual folder
-        parent_folder = this_folder
+        
+        elif request.POST.get("folder_input") :# get folder name to create
+            folder_name = request.POST.get("folder_input")
+            # set parent folder the actual folder
+            parent_folder = this_folder
 
-        # get all folders inside the actual folder to see if have the same name as the new one
-        exists_folder_with_same_name = this_folder.children_folder.all().filter(folder_name = folder_name)
+            # get all folders inside the actual folder to see if have the same name as the new one
+            exists_folder_with_same_name = this_folder.children_folder.all().filter(folder_name = folder_name)
 
-        if exists_folder_with_same_name : # if dome one have the same name, warn it to user
-            warn_message = "You already have folders with that name, try other name"
+            if exists_folder_with_same_name : # if dome one have the same name, warn it to user
 
-            # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "warn_message":warn_message})
+                children_files = this_folder.children_files.all()
 
-        # create folder
-        new_folder = folder.objects.create(
-            User = user_profile,
-            folder_name = folder_name,
-            folder_id = uuid4(),
-            parent_folder = parent_folder
-        )
-    
+                upload_file_form = file_form()
+                warn_message = "You already have folders with that name, try other name"
+
+                # return html page with necessary data
+                return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
+
+            # create folder
+            new_folder = folder.objects.create(
+                User = user_profile,
+                folder_name = folder_name,
+                folder_id = uuid4(),
+                parent_folder = parent_folder
+            )
+        else :
+            file_from_user =request.FILES["files"]
+            file_name_from_user = str(request.FILES["files"])
+
+            new_file = file.objects.create(
+                User = user_profile,
+                file = file_from_user,
+                file_id = uuid4(),
+                file_visible_name = file_name_from_user,
+                file_name = file_name_from_user,
+                parent_folder = this_folder
+            )
+
+
+
+    this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
+    this_folder_name = this_folder.folder_name
+
+    children_files = this_folder.children_files.all()
+
+    upload_file_form = file_form()
+
     # return html page with necessary data
-    return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "warn_message":warn_message})
+    return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})

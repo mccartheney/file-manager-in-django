@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/users/user/userPage.css' %}">
+    <title>Reset Password</title>
+</head>
+<body>
+    <form action="/user/" method="POST" class="form">
+        <div class="form_header">
+            <logo-component redirect="/" logoImgSrc="{% static '/images/logo_mc_files.png' %}">
+            </logo-component>
+        </div>
+        <div class="form_title">
+            <h2>
+                Reset Password
+            </h2>
+        </div>
+
+        <div class="form_content">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button type="submit">
+                Change Password
+            </button>
+        </div>
+    </form>
+
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+</body>
+</html>

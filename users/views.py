@@ -7,11 +7,34 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 
 # import register and login forms
-from .forms import user_profile_form_register, user_profile_form_login
+from .forms import change_pass_form, user_profile_form_register, user_profile_form_login
 
 from dashboard.models import master_folder, folder
 
 from uuid import uuid4
+
+# view to reset Password
+def user_view (request) :
+
+    if request.method == "POST" :
+        new_password = request.POST.get ("change_password")
+        print(request.POST)
+
+
+        user = request.user
+        profile = user.profile
+
+        user.set_password(new_password)
+        profile.password = new_password
+
+        user.save()
+        profile.save()    
+
+        return redirect ("/logout")
+
+    change_form = change_pass_form()
+
+    return render (request,"users/userPage.html", {"form" : change_form})
 
 # view to make a login
 def login_view (request) :

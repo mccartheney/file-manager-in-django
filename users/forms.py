@@ -4,6 +4,9 @@ from django import forms
 # import user_profile model to create forms for that model
 from .models import user_profile
 
+class change_pass_form (forms.Form) :
+    change_password = forms.CharField(widget=forms.PasswordInput(), label='')
+
 # form for register
 class user_profile_form_register (forms.ModelForm) : 
     class Meta :

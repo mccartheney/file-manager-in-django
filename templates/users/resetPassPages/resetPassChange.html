@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/users/resetPassPages/resetPassChange.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <logo-component redirect="/" logoImgSrc="{% static '/images/logo_mc_files.png' %}">
+        </logo-component>
+    </header>
+    <div class="content">
+        <div class="content_header">
+            <h2>
+                Create your new password
+            </h2>
+            <p>
+                Now you can create your new password
+            </p>
+        </div>
+
+        <form method="post">
+            {%csrf_token%}
+            {{form}}
+            <button type="submit">
+                change pass
+            </button>
+        </form>
+    </div>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+</body>
+</html>
