@@ -55,7 +55,7 @@ class folderComponent extends HTMLElement {
                 @import url("/static/css/components/dashboard/fileManager/folderComponent.css");
             </style>
 
-            <a href = "/dashboard/folders/${ this.getAttribute("folderId")}">
+            <a href = "/dashboard/filemanager/${ this.getAttribute("folderId")}">
                 <div class="folder_folderImg">
                     <img src="${this.getAttribute("folderImgSrc") }"/>
                 <div>

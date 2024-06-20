@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderSearch.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
@@ -14,18 +15,16 @@
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileRemove.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
 
-
     <title>Mc Files</title>
 
 </head>
 
 <body>
     <div class="main_content">
-
         <div class="sideBar_area">
             <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
-                dashBoardImgSrc="{% static 'images/dashboard.png'%}" folderImgSrc="{% static 'images/folder.png'%}"
-                actualPage="folders">
+                dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
+                actualPage="fileManager">
             </sidebar-component>
         </div>
         <div class="content_area">
@@ -74,7 +73,7 @@
                                 </button>
                             </div>
                         
-                            <form action="/dashboard/folders/" enctype="multipart/form-data" class="content_area_fileManagement_header_createArea_uploadFile_form"
+                            <form action="/dashboard/filemanager/" enctype="multipart/form-data" class="content_area_fileManagement_header_createArea_uploadFile_form"
                                 method="post">
                                 {% csrf_token %}
                                 <div class="content_area_fileManagement_header_createArea_uploadFile_form_top">
@@ -109,7 +108,7 @@
                                 </button>
                             </div>
                             
-                            <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_editFolder_form"
+                            <form action="/dashboard/filemanager/" class="content_area_fileManagement_header_createArea_editFolder_form"
                                 method="post">
                                 {% csrf_token %}
                                 <div class="content_area_fileManagement_header_createArea_editFolder_form_top">
@@ -138,7 +137,7 @@
                                 </button>
                             </div>
     
-                            <form action="/dashboard/folders/" class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
+                            <form action="/dashboard/filemanager/" class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
                                 {% csrf_token %}
                                 <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
                                     <label for="folder_input">Name</label>
@@ -152,15 +151,16 @@
                                 </div>
                             </form>
                         </div>
-    
-                        <div class="content_area_fileManagement_header_createArea_uploadFile">
-    
-                        </div>
                     </div>
     
                 </div>
                 <div class="content_area_fileManagement_search">
-    
+                    <div class="content_area_fileManagement_search_content">
+                        <div class="image">
+                            <img src="{% static 'images/search.png' %}" alt="">
+                        </div>
+                        <input type="text" class="content_area_fileManagement_search-input" placeholder="Search">
+                    </div>
                 </div>
                 <div class="content_area_fileManagement_manager">
                     <div class="content_area_fileManagement_manager_title">
@@ -221,7 +221,7 @@
                 </p>
             </div>
             <div class="removeFile_content_buttons">
-                <form action="/dashboard/folders/" method="post" class="removeFile_content_form">
+                <form action="/dashboard/filemanager/" method="post" class="removeFile_content_form">
                     {% csrf_token %}
                     <input hidden value="id_of_File" id="File_to_remove" name="file_to_remove" />
                     <button type="submit">
@@ -246,7 +246,7 @@
                 </p>
             </div>
             <div class="removeFolder_content_buttons">
-                <form action="/dashboard/folders/" method="post" class="removeFolder_content_form">
+                <form action="/dashboard/filemanager/" method="post" class="removeFolder_content_form">
                     {% csrf_token %}
                     <input hidden value="id_of_folder" id="folder_to_remove" name="folder_to_remove"/>
                     <button type="submit">
@@ -266,6 +266,7 @@
     <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/folder/fileComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/functionalities/searchFilesFolders.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
 
     <script>

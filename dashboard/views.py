@@ -58,7 +58,7 @@ def folders_dashboard (request) :
             upload_file_form = file_form()
 
             # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerRoot.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
 
         if request.POST.get("folder_to_rename") : # if the user send a new name to a folder
 
@@ -86,7 +86,7 @@ def folders_dashboard (request) :
                 warn_message = "You already have folders with that name, try other name"
 
                 # return html page with necessary data
-                return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
+                return render (request, "dashboard/fileManagerRoot.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
 
             # rename thet folder
             folder_to_rename.folder_visible_name = request.POST.get("folder_to_rename")
@@ -104,7 +104,7 @@ def folders_dashboard (request) :
             upload_file_form = file_form()
 
             # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerRoot.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
 
         elif request.POST.get("folder_to_remove"): # if user send a folder to remove
             
@@ -126,7 +126,7 @@ def folders_dashboard (request) :
             upload_file_form = file_form()
 
             # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerRoot.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
 
         elif request.POST.get("folder_input"): # if user send a folder to create
 
@@ -166,7 +166,7 @@ def folders_dashboard (request) :
             folders = reversed(folders)
 
             # return html page with necessary data
-            return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerRoot.html", {"folders":folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
         
         else :
             file_from_user =request.FILES["files"]
@@ -197,7 +197,7 @@ def folders_dashboard (request) :
     upload_file_form = file_form()
 
     # return html page with necessary data
-    return render (request, "dashboard/folders.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
+    return render (request, "dashboard/fileManagerRoot.html", {"folders" : folders, "folder_name" : root_folder_name, "file_form" : upload_file_form, "files": children_files})
 
 # view to file manager (not on root folder)
 @login_required(login_url="/user/login")
@@ -268,7 +268,7 @@ def folder_dashboard (request, slug) :
 
             # return html page with necessary data
 
-            return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerFolder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
 
 
 
@@ -297,7 +297,7 @@ def folder_dashboard (request, slug) :
 
             # return html page with necessary data
 
-            return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerFolder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
 
 
         if request.POST.get("folder_to_remove"): # if user send a folder to remove
@@ -322,7 +322,7 @@ def folder_dashboard (request, slug) :
 
             # return html page with necessary data
 
-            return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
+            return render (request, "dashboard/fileManagerFolder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
 
         
         elif request.POST.get("folder_input") :# get folder name to create
@@ -378,4 +378,4 @@ def folder_dashboard (request, slug) :
     print(path_quantity-1)
 
     # return html page with necessary data
-    return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files, "path_to_root" : path_to_root, "path_quantity" : path_quantity,"paths_numbers":{"first" : 1, "secound":2, "penultimate":path_quantity-1, "last":path_quantity} })
+    return render (request, "dashboard/fileManagerFolder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files, "path_to_root" : path_to_root, "path_quantity" : path_quantity,"paths_numbers":{"first" : 1, "secound":2, "penultimate":path_quantity-1, "last":path_quantity} })

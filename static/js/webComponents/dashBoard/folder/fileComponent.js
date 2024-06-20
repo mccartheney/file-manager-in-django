@@ -8,7 +8,6 @@ class fileComponent extends HTMLElement {
     }
 
     connectedCallback () {
-        console.log(this.getAttribute("fileId"));
         
         let removeButton = this.shadow.querySelector(".removeButton")
         let deleteFolderWindow = document.querySelector(".removeFile")

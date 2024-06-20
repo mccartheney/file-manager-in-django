@@ -16,6 +16,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderSearch.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
@@ -32,8 +33,8 @@
     
             <div class="sideBar_area">
                 <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
-                    dashBoardImgSrc="{% static 'images/dashboard.png'%}" folderImgSrc="{% static 'images/folder.png'%}"
-                    actualPage="folders">
+                    dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
+                    actualPage="fileManager">
                 </sidebar-component>
             </div>
             <div class="content_area">
@@ -79,7 +80,7 @@
                                     </button>
                                 </div>
                             
-                                <form action="/dashboard/folders/{{ folder_id }}" 
+                                <form action="/dashboard/filemanager/{{ folder_id }}" 
                                 enctype="multipart/form-data" 
                                 class="content_area_fileManagement_header_createArea_uploadFile_form"
                                     method="post">
@@ -116,7 +117,7 @@
                                     </button>
                                 </div>
                             
-                                <form action="/dashboard/folders/{{ folder_id }}" class="content_area_fileManagement_header_createArea_editFolder_form"
+                                <form action="/dashboard/filemanager/{{ folder_id }}" class="content_area_fileManagement_header_createArea_editFolder_form"
                                     method="post">
                                     {% csrf_token %}
                                     <div class="content_area_fileManagement_header_createArea_editFolder_form_top">
@@ -146,7 +147,7 @@
                                     </button>
                                 </div>
     
-                                <form action="/dashboard/folders/{{ folder_id }}"
+                                <form action="/dashboard/filemanager/{{ folder_id }}"
                                     class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
                                     {% csrf_token %}
                                     <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
@@ -164,14 +165,16 @@
                                 </form>
                             </div>
     
-                            <div class="content_area_fileManagement_header_createArea_uploadFile">
-    
-                            </div>
                         </div>
     
                     </div>
                     <div class="content_area_fileManagement_search">
-    
+                        <div class="content_area_fileManagement_search_content">
+                            <div class="image">
+                                <img src="{% static 'images/search.png' %}" alt="">
+                            </div>
+                            <input type="text" class="content_area_fileManagement_search-input" placeholder="Search">
+                        </div>
                     </div>
                     
                     <div class="content_area_fileManagement_manager">
@@ -183,19 +186,19 @@
                                     {% if path_quantity >= 5%}
                                         {%for path in path_to_root%}
                                             {%if forloop.counter == paths_numbers.first%}
-                                                <a href="/dashboard/folders/">
+                                                <a href="/dashboard/filemanager/">
                                                     {{path.folder_visible_name}} /
                                                 </a>
                                                 <span> > </span>
                                             {%elif forloop.counter == paths_numbers.secound  %}
                                                 <span>...</span><span> > </span>
                                             {%elif forloop.counter == paths_numbers.penultimate %}
-                                                <a href="/dashboard/folders/{{path.folder_id}}">
+                                                <a href="/dashboard/filemanager/{{path.folder_id}}">
                                                     {{path.folder_visible_name}} /
                                                 </a>
                                                 <span> > </span>
                                             {%elif forloop.counter == paths_numbers.last %}
-                                                <a href="/dashboard/folders/{{path.folder_id}}">
+                                                <a href="/dashboard/filemanager/{{path.folder_id}}">
                                                     {{path.folder_visible_name}} /
                                                 </a>
                                             {%endif%}
@@ -203,16 +206,16 @@
                                     {%else%}
                                         {%for path in path_to_root%}
                                             {%if path.parent_folder == None%}
-                                                <a href="/dashboard/folders/">
+                                                <a href="/dashboard/filemanager/">
                                                     {{path.folder_visible_name}} /
                                                 </a><span> > </span>
                                             {%else%}
                                                 {%if forloop.counter != paths_numbers.last%}
-                                                    <a href="/dashboard/folders/{{path.folder_id}}">
+                                                    <a href="/dashboard/filemanager/{{path.folder_id}}">
                                                         {{path.folder_visible_name}} /
                                                     </a> <span> > </span>
                                                 {%else%}
-                                                    <a href="/dashboard/folders/{{path.folder_id}}">
+                                                    <a href="/dashboard/filemanager/{{path.folder_id}}">
                                                         {{path.folder_visible_name}} /
                                                     </a>
                                                 {%endif%}
@@ -225,7 +228,7 @@
                             <p>
                                 {{warn_message}}
                             </p>
-                            <a href="/dashboard/folders/{{parent_id}}">
+                            <a href="/dashboard/filemanager/{{parent_id}}">
                                 <button>
                                     <img src="{% static 'images/return_arrow.png' %}" />
                                 </button>
@@ -280,7 +283,7 @@
                     </p>
                 </div>
                 <div class="removeFile_content_buttons">
-                    <form action="/dashboard/folders/{{ folder_id }}" method="post" class="removeFile_content_form">
+                    <form action="/dashboard/filemanager/{{ folder_id }}" method="post" class="removeFile_content_form">
                         {% csrf_token %}
                         <input hidden value="id_of_File" id="File_to_remove" name="file_to_remove" />
                         <button type="submit">
@@ -305,7 +308,7 @@
                     </p>
                 </div>
                 <div class="removeFolder_content_buttons">
-                    <form action="/dashboard/folders/{{ folder_id }}" method="post" class="removeFolder_content_form">
+                    <form action="/dashboard/filemanager/{{ folder_id }}" method="post" class="removeFolder_content_form">
                         {% csrf_token %}
                         <input hidden value="id_of_folder" id="folder_to_remove" name="folder_to_remove" />
                         <button type="submit">

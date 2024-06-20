@@ -9,8 +9,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path ("", home_dashboard), # path to dashboard homepage
-    path ("folders/", folders_dashboard),
-    path ("folders/<slug:slug>", folder_dashboard)
+    path ("filemanager/", folders_dashboard),
+    path ("filemanager/<slug:slug>", folder_dashboard)
 ]
 
 
