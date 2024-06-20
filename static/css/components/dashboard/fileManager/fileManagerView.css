@@ -64,3 +64,23 @@
 .content_area_fileManagement_manager_title_emptyFolders img {
     width: 300px;
 }
+
+.content_area_fileManagement_manager_title_path {
+    width: 70%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-family: "lato", sans-serif;
+}
+
+.content_area_fileManagement_manager_title_path a{
+    text-decoration: none;
+    color: var(--white);
+}
+
+.content_area_fileManagement_manager_title_path span {
+    color: var(--light-purple);
+    margin-right: 20px;
+}

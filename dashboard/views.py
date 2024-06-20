@@ -62,13 +62,34 @@ def folders_dashboard (request) :
 
         if request.POST.get("folder_to_rename") : # if the user send a new name to a folder
 
+
             # get the necessary data to modify folder:
 
             # folder id
             folder_id_to_rename = request.POST.get ("folder_id_to_rename")
             # get folder by id
             folder_to_rename = user_profile.folders.all().filter(folder_id = folder_id_to_rename)[0]
+
+
+            folder_with_the_same_name = root_folder.children_folder.all().filter(folder_name = request.POST.get("folder_to_rename"))
+
+            if folder_with_the_same_name:
+
+                # get all folders inside root folder
+                folders = root_folder.children_folder.all()
+                folders = reversed(folders)
+
+                children_files = root_folder.children_files.all()
+
+                upload_file_form = file_form()
+
+                warn_message = "You already have folders with that name, try other name"
+
+                # return html page with necessary data
+                return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
+
             # rename thet folder
+            folder_to_rename.folder_visible_name = request.POST.get("folder_to_rename")
             folder_to_rename.folder_name = request.POST.get("folder_to_rename")
 
             # save the changes
@@ -111,9 +132,9 @@ def folders_dashboard (request) :
 
             # get the name of the new folder
             folder_name = request.POST.get("folder_input")
+            folder_visible_name = request.POST.get("folder_input")
             # get how many folder with the same name exists
             exists_folder_with_same_name = root_folder.children_folder.all().filter(folder_name = folder_name)
-                
             children_files = root_folder.children_files.all()
 
             upload_file_form = file_form()
@@ -123,17 +144,17 @@ def folders_dashboard (request) :
             folders = reversed(folders)
 
             if exists_folder_with_same_name : # if exist any folder with the same name, warn it to user
-                warn_message = "You already have folders with that name, try other name"
+                folder_visible_name = f'{folder_name} ({len(exists_folder_with_same_name)})'
 
-                # return html page with necessary data
-                return render (request, "dashboard/folders.html", {"folders":folders, "folder_name" : root_folder_name, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
+               
 
             # create the new folder
             new_folder = folder.objects.create(
                 User = user_profile,
                 folder_name = folder_name,
                 folder_id = uuid4(),
-                parent_folder = root_folder
+                parent_folder = root_folder,
+                folder_visible_name = folder_visible_name
             )
 
             children_files = root_folder.children_files.all()
@@ -150,12 +171,18 @@ def folders_dashboard (request) :
         else :
             file_from_user =request.FILES["files"]
             file_name_from_user = str(request.FILES["files"])
+            visible_file_name_from_user = str(request.FILES["files"])
+
+            file_with_same_name = children_files.filter(file_name = file_name_from_user)
+
+            if file_with_same_name :
+                visible_file_name_from_user = f"{file_name_from_user} ({len(file_with_same_name)})"
 
             new_file = file.objects.create(
                 User = user_profile,
                 file = file_from_user,
                 file_id = uuid4(),
-                file_visible_name = file_name_from_user,
+                file_visible_name = visible_file_name_from_user,
                 file_name = file_name_from_user,
                 parent_folder = root_folder
             )
@@ -174,7 +201,9 @@ def folders_dashboard (request) :
 
 # view to file manager (not on root folder)
 @login_required(login_url="/user/login")
-def folder_dashboard (request, slug) :  
+def folder_dashboard (request, slug) :
+    
+
     # create a empty warn message to hove global acess inside this scope
     warn_message = ""
 
@@ -188,6 +217,24 @@ def folder_dashboard (request, slug) :
     this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
     this_folder_name = this_folder.folder_name
 
+
+    path_to_root = []
+    path_quantity = 0
+    root_folder = request.user.profile.folders.all().filter(parent_folder = None, folder_name="root").first()
+    actual_folder_search = this_folder
+    actual_parent_folder = this_folder.parent_folder
+
+    while True :
+        path_quantity += 1
+        path_to_root
+        path_to_root.append(actual_folder_search)
+        
+        if actual_folder_search == root_folder :
+            path_to_root = reversed(path_to_root)
+            break
+
+        actual_folder_search = actual_parent_folder
+        actual_parent_folder = actual_folder_search.parent_folder
     children_files = this_folder.children_files.all()
 
     # get all folder inside the folder the user are in
@@ -280,6 +327,7 @@ def folder_dashboard (request, slug) :
         
         elif request.POST.get("folder_input") :# get folder name to create
             folder_name = request.POST.get("folder_input")
+            folder_visible_name = request.POST.get("folder_input")
             # set parent folder the actual folder
             parent_folder = this_folder
 
@@ -288,30 +336,32 @@ def folder_dashboard (request, slug) :
 
             if exists_folder_with_same_name : # if dome one have the same name, warn it to user
 
-                children_files = this_folder.children_files.all()
-
-                upload_file_form = file_form()
-                warn_message = "You already have folders with that name, try other name"
-
-                # return html page with necessary data
-                return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "warn_message":warn_message, "file_form" : upload_file_form, "files": children_files})
+                folder_visible_name = f'{folder_name} ({len(exists_folder_with_same_name)})'
+                
 
             # create folder
             new_folder = folder.objects.create(
                 User = user_profile,
                 folder_name = folder_name,
                 folder_id = uuid4(),
-                parent_folder = parent_folder
+                parent_folder = this_folder,
+                folder_visible_name = folder_visible_name
             )
         else :
             file_from_user =request.FILES["files"]
             file_name_from_user = str(request.FILES["files"])
+            visible_file_name_from_user = str(request.FILES["files"])
+
+            file_with_same_name = children_files.filter(file_name = file_name_from_user)
+
+            if file_with_same_name :
+                visible_file_name_from_user = f"{file_name_from_user} ({len(file_with_same_name)})"
 
             new_file = file.objects.create(
                 User = user_profile,
                 file = file_from_user,
                 file_id = uuid4(),
-                file_visible_name = file_name_from_user,
+                file_visible_name = visible_file_name_from_user,
                 file_name = file_name_from_user,
                 parent_folder = this_folder
             )
@@ -319,11 +369,13 @@ def folder_dashboard (request, slug) :
 
 
     this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
-    this_folder_name = this_folder.folder_name
+    this_folder_name = this_folder.folder_visible_name
 
     children_files = this_folder.children_files.all()
 
     upload_file_form = file_form()
 
+    print(path_quantity-1)
+
     # return html page with necessary data
-    return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files})
+    return render (request, "dashboard/folder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files, "path_to_root" : path_to_root, "path_quantity" : path_quantity,"paths_numbers":{"first" : 1, "secound":2, "penultimate":path_quantity-1, "last":path_quantity} })

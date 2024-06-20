@@ -128,7 +128,8 @@ def register_view (request) :
                 new_master_folder = folder.objects.create(
                     User = new_user_profile,
                     folder_id = str(uuid4()),
-                    folder_name = "root"
+                    folder_name = "root",
+                    folder_visible_name = "root" 
                 )
                 new_master_folder.save()
 
