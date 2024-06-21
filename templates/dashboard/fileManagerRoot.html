@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderRemove.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileRemove.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/filePreview.css' %}">
+
 
     <title>Mc Files</title>
 
@@ -24,7 +26,10 @@
         <div class="sideBar_area">
             <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
                 dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
-                actualPage="fileManager">
+                actualPage="fileManager"
+                foldersImgSrc="{% static 'images/folder.png'%}"
+                filesImgSrc="{% static 'images/files.png'%}"
+                >
             </sidebar-component>
         </div>
         <div class="content_area">
@@ -257,6 +262,21 @@
                     Cancel
                 </button>
             </div>
+        </div>
+    </div>
+
+    <div class="showFileContent invisible">
+        <div class="showFileContent_header">
+            <a href="/media/uploads/nothing_found_axZV5rb.png" class="showFileContent_header_download" download="">
+                <img src="{% static 'images/download.png' %}" alt="">
+            </a>
+            <button class="showFileContent_header_close">
+                x
+            </button>
+        </div>
+    
+        <div class="showFileContent_content">
+            <iframe src="/media/uploads/nothing_found_axZV5rb.png" frameborder="0"></iframe>
         </div>
     </div>
 

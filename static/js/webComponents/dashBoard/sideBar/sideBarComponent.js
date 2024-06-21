@@ -45,6 +45,14 @@ class sideBarComponent extends HTMLElement {
                     <img src="${this.getAttribute('fileManagerImgSrc')}" />
                     File Manager
                 </a>
+                <a href="/dashboard/folders" class="folders">
+                    <img src="${this.getAttribute('foldersImgSrc')}" />
+                    Folders
+                </a>
+                <a href="/dashboard/files" class="Files">
+                    <img src="${this.getAttribute('filesImgSrc')}" />
+                    Files
+                </a>
             </nav>
         
         `

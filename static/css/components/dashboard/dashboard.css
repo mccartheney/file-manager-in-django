@@ -2,3 +2,121 @@
     display: flex;
     margin-top: 10px;
 }
+
+.content_area_types_cards {
+    width: calc(100% - 50px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content_area_types_cards_card {
+    width: 18%;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid var(--white);
+    color: var(--white);
+}
+
+.content_area_types_cards_card_image img {
+    width: 50px;
+    margin-bottom: 15px;
+}
+
+.content_area_types_cards_card_title h4 {
+    font-family: "Oswald", sans-serif;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.content_area_types_cards_card_space_dataLimite p{
+    color: var(--light-gray);
+    font-family: "lato", sans-serif;
+}
+
+.content_area_types_cards_card_space_dataLimite p span{
+    color: var(--white);
+    font-weight: bolder;
+    margin-right: 5px;
+}
+
+.content_area_types_cards_card_space {
+    margin-bottom: 15px;
+    height: 10px;
+    width: 100%;
+    background-color: var(--medium-gray);
+    border-radius: 10px;
+}
+
+.content_area_types_cards_card_space_actualSpaceSpace{
+    width: 10%;
+    border-radius: 10px;
+    height: 10px;
+    background-color: var(--dark-purple);
+}
+
+.content_area_filesAndConsumedStorage {
+    width: calc(100% - 50px);
+    display: flex; justify-content: space-between;
+    margin-top: 20px;
+}
+
+.content_area_filesAndConsumedStorage_ConsumedStorage {
+    position: relative;
+    padding: 30px;
+    display: flex;
+    border: 1px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid white;
+    border-radius: 10px;
+    width: min-content;
+
+}
+
+.content_area_filesAndConsumedStorage_ConsumedStorage h3 {
+    font-size: 30px;
+    margin-bottom: 50px;
+    color: var(--white);
+    font-family: "Oswald", sans-serif;
+}
+
+
+.content_area_filesAndConsumedStorage_ConsumedStorage h4 {
+    text-align: center;
+    font-size: 30px;
+    position: absolute;
+    font-family: "Oswald", sans-serif;
+    top: 195px;
+    left: 87px;
+    color: var(--white);
+}
+
+.content_area_filesAndConsumedStorage_ConsumedStorage h4 span{
+    font-family: "lato", sans-serif;
+    font-size: 24px;
+}
+
+.content_area_filesAndConsumedStorage_ConsumedStorage_info {
+    display: flex;
+    font-size: 14px;
+    color: var(--white);
+    justify-content: space-between;
+    align-items: center;
+    font-family: "lato", sans-serif;
+    margin-top: 50px;
+}
+
+.used_color {
+    width: 10px;
+    height: 10px;
+    background-color: var(--dark-purple);
+    border-radius: 100%;
+}
+
+.not_used_color {
+    width: 10px;
+    height: 10px;
+    background-color: var(--light-gray);
+    border-radius: 100%;
+}

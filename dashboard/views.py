@@ -14,18 +14,28 @@ from .forms import file_form
 
 from .models import file
 
+from .functionalities import get_type_files_size
+
 # view to homepage to dashboard
 @login_required(login_url="/user/login")
 def home_dashboard (request) :
-    for x in request.user.profile.files.all() :
-        print(f"the file {x.file} have the size of {round(x.file.size /100000, 2)} mb")
-        
+    all_files = request.user.profile.files.all()
+    file_sizes = get_type_files_size(all_files=all_files)
+    file_types = file_sizes.keys()
+    used_storage = sum(file_sizes.values())
+    total_storage = 50
+    used_porcentage =  round((used_storage/total_storage) * 100)
+    used_float_porcentage = (used_storage/total_storage) * 100
+    left_porcentage = round(100 - used_float_porcentage,2)
+
+    print (file_sizes)
+
     # render home page
-    return render (request, "dashboard/index.html")
+    return render (request, "dashboard/index.html", {"file_sizes":file_sizes, "used_storage" :used_storage, "total_storage" : total_storage, "file_types":file_types, "used_porcentage":used_porcentage, "used_float_porcentage" : used_float_porcentage, "left_porcentage":left_porcentage})
 
 # view to file manager (on root folder)
 @login_required(login_url="/user/login")
-def folders_dashboard (request) :
+def file_manager_dashboard (request) :
     # create a empty warn message to hove global acess inside this scope
     warn_message = ""
 
@@ -201,7 +211,7 @@ def folders_dashboard (request) :
 
 # view to file manager (not on root folder)
 @login_required(login_url="/user/login")
-def folder_dashboard (request, slug) :
+def file_manager_folder_dashboard (request, slug) :
     
 
     # create a empty warn message to hove global acess inside this scope
@@ -215,6 +225,7 @@ def folder_dashboard (request, slug) :
 
     # get actual folder and folder name by id
     this_folder = request.user.profile.folders.all().filter(folder_id = folder_id)[0]
+
     this_folder_name = this_folder.folder_name
 
 
@@ -379,3 +390,22 @@ def folder_dashboard (request, slug) :
 
     # return html page with necessary data
     return render (request, "dashboard/fileManagerFolder.html", {"folders":folders,"folder_id" : this_folder.folder_id, "folder_name" : this_folder_name, "parent_id":parent_id, "file_form" : upload_file_form, "files": children_files, "path_to_root" : path_to_root, "path_quantity" : path_quantity,"paths_numbers":{"first" : 1, "secound":2, "penultimate":path_quantity-1, "last":path_quantity} })
+
+
+@login_required(login_url="/user/login")
+def folders (request) :
+    # create a empty warn message to hove global acess inside this scope
+    warn_message = ""
+
+    folders = request.user.profile.folders.all()
+
+    # return html page with necessary data
+    return render (request, "dashboard/folders.html", {"folders" : folders})
+
+@login_required(login_url="/user/login")
+def files (request) :
+
+    files = request.user.profile.files.all()
+
+    # return html page with necessary data
+    return render (request, "dashboard/files.html", {"files" : files})

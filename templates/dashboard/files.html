@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderSearch.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/filePreview.css' %}">
+
+    <title>Mc Files</title>
+
+</head>
+
+<body>
+    <div class="main_content">
+        <div class="sideBar_area">
+            <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
+                dashBoardImgSrc="{% static 'images/dashboard.png'%}"
+                fileManagerImgSrc="{% static 'images/fileManager.png'%}" 
+                filesImgSrc="{% static 'images/files.png'%}"
+                foldersImgSrc="{% static 'images/folder.png'%}"
+                actualPage="Files">
+            </sidebar-component>
+        </div>
+        <div class="content_area">
+            <header-component title="File Management" userImage="{% static 'images/user.png' %}"
+                settingIcon="{% static 'images/setting.png' %}" logOutIcon="{% static 'images/logout.png' %}">
+            </header-component>
+
+            <div class="content_area_fileManagement">
+                <div class="content_area_fileManagement_header">
+                    <div class="content_area_fileManagement_header_title">
+                        <h3>
+                            All Files
+                        </h3>
+                    </div>
+
+                </div>
+                <div class="content_area_fileManagement_search">
+                    <div class="content_area_fileManagement_search_content">
+                        <div class="image">
+                            <img src="{% static 'images/search.png' %}" alt="">
+                        </div>
+                        <input type="text" class="content_area_fileManagement_search-input" placeholder="Search">
+                    </div>
+                </div>
+                <div class="content_area_fileManagement_manager">
+                    {%if folders or files%}
+                    <div class="content_area_fileManagement_manager_title_folders">
+                        {% for file in files%}
+                            <file-component fileUrl="{{file.file.url}}" fileTitle="{{file.file_visible_name}}" fileId="{{file.file_id}}"
+                                fileImgSrc="{% static '/images/files.png' %}" deleteIcon="{% static '/images/delete.png' %}">
+                            </file-component>
+                        {% endfor %}
+                    </div>
+                    {%else%}
+                    <div class="content_area_fileManagement_manager_title_emptyFolders">
+                        <img src="{% static 'images/nothing_found.png'%}" />
+                        <h2>
+                            Nothing Here ...
+                        </h2>
+                        <p>
+                            Create folders or upload some files to see them here !
+                        </p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="showFileContent invisible">
+        <div class="showFileContent_header">
+            <a href="" class="showFileContent_header_download" download>
+                <img src="{% static 'images/download.png' %}" alt="">
+            </a>
+            <button class="showFileContent_header_close">
+                x
+            </button>
+        </div>
+
+        <div class="showFileContent_content">
+            <iframe src="/media/uploads/nothing_found_axZV5rb.png" frameborder="0" ></iframe>
+        </div>
+    </div>
+
+    <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/folder/fileComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/functionalities/searchFilesFolders.js' %}"></script>
+
+    <script>
+    </script>
+</body>
+
+</html>

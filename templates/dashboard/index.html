@@ -11,24 +11,30 @@
     <link rel="stylesheet" href="{% static 'css/components/dashboard/dashboard.css' %}">
     <title>Mc Files</title>
 
+
+
     <style>
-        .dashboard {
-            background-color: var(--dark-gray);
-            color: var(--dark-purple);
+        .progress-bar {
+            width: 230px;
+            height: 230px;
+            border-radius: 50%;
+            background:
+            radial-gradient(closest-side, var(--dark-gray) 79%, transparent 80% 100%),
+            conic-gradient(var(--dark-purple) {{used_porcentage}}%, var(--light-gray) 0);
         }
     </style>
 
 </head>
 
 <body>
-
-
-
     <div class="main_content">
         <div class="sideBar_area">
             <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
                 dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
-                actualPage="dashboard">
+                actualPage="dashboard"
+                foldersImgSrc="{% static 'images/folder.png'%}"
+                filesImgSrc="{% static 'images/files.png'%}"
+                >
             </sidebar-component>
         </div>
 
@@ -36,12 +42,194 @@
             <header-component title="Dashboard" userImage="{% static 'images/user.png' %}"
                 settingIcon="{% static 'images/setting.png' %}" logOutIcon="{% static 'images/logout.png' %}">
             </header-component>
+
+            <div class="content_area_types_cards">
+                {% for file_type_name, file_type_storage in file_sizes.items %}
+                    <div class="content_area_types_cards_card">
+                        <div class="content_area_types_cards_card_image">
+                            <img src="{% static 'images/' %}{{file_type_name}}.png" alt="">
+                        </div>
+                        <div class="content_area_types_cards_card_title">
+                            <h4>
+                                {{file_type_name}}
+                            </h4>
+                        </div>
+                        
+                        <div class="content_area_types_cards_card_space">
+                            
+                            <porcentage-bar
+                                totalStorage = {{total_storage}}
+                                type_storage = {{file_type_storage}}
+                            ></porcentage-bar>
+                            
+                        </div>
+                        
+                        <div class="content_area_types_cards_card_space_dataLimite">
+                            <p>
+                                <span class="actual">{{ file_type_storage }} MB</span> of {{total_storage}} MB
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="content_area_filesAndConsumedStorage">
+                <div class="content_area_filesAndConsumedStorage_ConsumedStorage">
+                    <h3>
+                        Storage
+                    </h3>
+                    <div class="progress-bar">
+                        <progress value="{{used_storage}}" min="0" max="100" style="visibility:hidden;height:0;width:0;">{{used_storage}}</progress>
+                    </div>
+                    <h4>
+                        {{used_storage}}
+                        <br>
+                        <span>Used of {{total_storage}}</span>
+                    </h4>
+                    <div class="content_area_filesAndConsumedStorage_ConsumedStorage_info">
+                        <div class="used_color"></div>
+                        <span>{{used_float_porcentage}}%</span>
+                        <span>Used</span>
+                        <span>|
+                        </span>
+                        <div class="not_used_color"></div>
+                        <span>{{left_porcentage}}%</span>
+                        <span>Available</span>
+                    </p>
+                    </div>
+                </div>
+
+                <div id="chart-container">
+                    <div id="y-axis"></div>
+                    <div id="chart"></div>
+                </div>
+
+            </div>    
         </div>
     </div>
 
     <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/dashBoard/dashboard/progressBarComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
+
+    
+
+
+    <style>
+
+        
+        #chart-container {
+            display: flex;
+            width: 80%;
+            margin-left: 40px;
+            align-items: flex-end;
+        }
+
+        #y-axis {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding: 10px 0;
+            box-sizing: border-box;
+        }
+
+        .y-axis-label {
+            text-align: right;
+            padding-right: 10px;
+            box-sizing: border-box;
+            color: var(--white);
+            font-family: "lato", sans-serif;
+            
+        }
+
+        #chart {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            border: 1px solid var(--white);
+            border-radius: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .bar {
+            flex: 1;
+            margin: 0 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .bar div {
+            width: 100%;
+            background-color: #4caf50;
+            text-align: center;
+            color: white;
+            padding: 5px 0;
+            box-sizing: border-box;
+        }
+
+        .bar-label {
+            margin-top: 5px;
+        }
+    </style>
+
+    <script>
+        // script.js
+            document.addEventListener('DOMContentLoaded', function () {
+                const data = {
+                    'images': 0.88,
+                    'videos': 0,
+                    'audios': 0.1,
+                    'documents': 35.75
+                };
+                const maxValue = 50; // Maximum value for the chart
+
+                const chart = document.getElementById('chart');
+                const yAxis = document.getElementById('y-axis');
+
+                // Calculate the number of labels needed based on the chart height and step size
+                const chartHeight = chart.offsetHeight;
+                const stepSize = 10; // Adjust step size as needed
+                const numberOfLabels = Math.ceil(maxValue / stepSize);
+
+                yAxis.style.gridTemplateRows = `repeat(${numberOfLabels}, 1fr)`;
+
+                // Create Y-axis labels from highest to lowest
+                for (let i = numberOfLabels; i >= 0; i--) {
+                    const yAxisLabel = document.createElement('div');
+                    yAxisLabel.classList.add('y-axis-label');
+                    yAxisLabel.textContent = (i * stepSize) + ' MB';
+                    yAxis.appendChild(yAxisLabel);
+                }
+
+                // Create bars
+                for (let key in data) {
+                    const value = data[key];
+                    const heightPercent = (value / maxValue) * 100;
+
+                    const bar = document.createElement('div');
+                    bar.classList.add('bar');
+
+                    const barContent = document.createElement('div');
+                    barContent.style.height = heightPercent + '%';
+                    barContent.textContent = value + ' MB';
+
+                    const barLabel = document.createElement('div');
+                    barLabel.classList.add('bar-label');
+                    barLabel.textContent = key;
+
+                    bar.appendChild(barContent);
+                    bar.appendChild(barLabel);
+                    chart.appendChild(bar);
+                }
+            });
+
+    </script>
+
 
 
 </body>

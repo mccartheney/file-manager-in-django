@@ -1,337 +1,345 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!DOCTYPE html>
-    {% load static %}
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderSearch.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderCreator.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManagerView.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileManager.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderRemove.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileRemove.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/fileAndFolderSearch.css' %}">
     <link rel="stylesheet" href="{% static 'css/components/dashboard/fileManager/folderEdit.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/dashboard/filePreview.css' %}">
     
-        <title>Mc Files</title>
     
-    </head>
+    <title>Mc Files</title>
+</head>
+<body>
     
-    <body>
-        <div class="main_content">
     
-            <div class="sideBar_area">
-                <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
-                    dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
-                    actualPage="fileManager">
-                </sidebar-component>
-            </div>
-            <div class="content_area">
-                <header-component title="File Management" userImage="{% static 'images/user.png' %}"
-                    settingIcon="{% static 'images/setting.png' %}" logOutIcon="{% static 'images/logout.png' %}">
-                </header-component>
-    
-                <div class="content_area_fileManagement">
-                    <div class="content_area_fileManagement_header">
-                        <div class="content_area_fileManagement_header_title">
-                            <h3>
-                                Manage Files
-                            </h3>
-                        </div>
-    
-                        <div class="content_area_fileManagement_header_createArea">
-                            <div class="content_area_fileManagement_header_createArea_dropDown">
-                                <button class="toggle_dropDown">
-                                    <span> + </span> Add new
-                                </button>
-                                <div class="content_area_fileManagement_header_createArea_dropDown_options invisible">
-                                    <button class="call_fileUpload">
-                                        <img src="{% static 'images/folder_create.png' %}" alt="">
-                                        Upload files
-                                    </button>
-                                    <button class="call_folderCreator">
-                                        <img src="{% static 'images/file_create.png' %}" alt="">
-                                        Create folder
-                                    </button>
-                                </div>
-                            </div>
+    <div class="main_content">
 
-                            <div class="content_area_fileManagement_header_createArea_createFolder_uploadFile hidden ">
-                                <div class="content_area_fileManagement_header_createArea_uploadFile_header">
-                                    <h3>
-                                        Upload File
-                                    </h3>
-                                    <p>
-                                        Upload File in the form
-                                    </p>
-                                    <button class="close_UploadFile_edit">
-                                        x
-                                    </button>
-                                </div>
-                            
-                                <form action="/dashboard/filemanager/{{ folder_id }}" 
-                                enctype="multipart/form-data" 
-                                class="content_area_fileManagement_header_createArea_uploadFile_form"
-                                    method="post">
-                                    {% csrf_token %}
-                                    <div class="content_area_fileManagement_header_createArea_uploadFile_form_top">
-                                        <div class="content_area_fileManagement_header_createArea_uploadFile_form_top_header">
-                                            <h3>
-                                                Drop files here
-                                            </h3>
-                                            <p>
-                                                or
-                                            </p>
-                                        </div>
-                                        {{file_form.as_p}}
-                                    </div>
-                                    <div class="content_area_fileManagement_header_createArea_uploadFile_form_bottom">
-                                        <button type="submit" class="uploadFile">
-                                            Upload
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+        <div class="sideBar_area">
+            <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
+                dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
+                actualPage="fileManager"
+                foldersImgSrc="{% static 'images/folder.png'%}"
+                filesImgSrc="{% static 'images/files.png'%}"
 
-                            <div class="content_area_fileManagement_header_createArea_createFolder_editFolder hidden">
-                                <div class="content_area_fileManagement_header_createArea_editFolder_header">
-                                    <h3>
-                                        Edit Folder
-                                    </h3>
-                                    <p>
-                                        Edit name of <span class="editFolder_name"></span>
-                                    </p>
-                                    <button class="close_folder_edit">
-                                        x
-                                    </button>
-                                </div>
-                            
-                                <form action="/dashboard/filemanager/{{ folder_id }}" class="content_area_fileManagement_header_createArea_editFolder_form"
-                                    method="post">
-                                    {% csrf_token %}
-                                    <div class="content_area_fileManagement_header_createArea_editFolder_form_top">
-                                        <label for="folder_input">Name</label>
-                                        <input type="text" name="folder_to_rename" id="folder_input" placeholder="Folder name" />
-                                        <input type="text" name="folder_id_to_rename" id="folder_id_to_rename" hidden placeholder="Folder name" />
-                                    </div>
-                                    <div class="content_area_fileManagement_header_createArea_editFolder_form_bottom">
-                            
-                                        <button type="submit" class="edit_folder">
-                                            Edit
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-    
-                            <div class="content_area_fileManagement_header_createArea_createFolder hidden">
-                                <div class="content_area_fileManagement_header_createArea_createFolder_header">
-                                    <h3>
-                                        Add new Folder
-                                    </h3>
-                                    <p>
-                                        Create a new folder
-                                    </p>
-                                    <button class="close_folder_creation">
-                                        x
-                                    </button>
-                                </div>
-    
-                                <form action="/dashboard/filemanager/{{ folder_id }}"
-                                    class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
-                                    {% csrf_token %}
-                                    <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
-                                        <label for="folder_input">Name</label>
-                                        <input type="text" name="folder_input" id="folder_input"
-                                            placeholder="Folder name" />
-                                        
-                                    </div>
-                                    <div class="content_area_fileManagement_header_createArea_createFolder_form_bottom">
-    
-                                        <button type="submit" class="create_folder">
-                                            Create
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-    
-                        </div>
-    
+                >
+            </sidebar-component>
+        </div>
+        <div class="content_area">
+            <header-component title="File Management" userImage="{% static 'images/user.png' %}"
+                settingIcon="{% static 'images/setting.png' %}" logOutIcon="{% static 'images/logout.png' %}">
+            </header-component>
+
+            <div class="content_area_fileManagement">
+                <div class="content_area_fileManagement_header">
+                    <div class="content_area_fileManagement_header_title">
+                        <h3>
+                            Manage Files
+                        </h3>
                     </div>
-                    <div class="content_area_fileManagement_search">
-                        <div class="content_area_fileManagement_search_content">
-                            <div class="image">
-                                <img src="{% static 'images/search.png' %}" alt="">
-                            </div>
-                            <input type="text" class="content_area_fileManagement_search-input" placeholder="Search">
-                        </div>
-                    </div>
-                    
-                    <div class="content_area_fileManagement_manager">
-                        <div class="content_area_fileManagement_manager_title">
-                            <h2>
-                                {{folder_name}}
-                            </h2>
-                            <div class="content_area_fileManagement_manager_title_path">
-                                    {% if path_quantity >= 5%}
-                                        {%for path in path_to_root%}
-                                            {%if forloop.counter == paths_numbers.first%}
-                                                <a href="/dashboard/filemanager/">
-                                                    {{path.folder_visible_name}} /
-                                                </a>
-                                                <span> > </span>
-                                            {%elif forloop.counter == paths_numbers.secound  %}
-                                                <span>...</span><span> > </span>
-                                            {%elif forloop.counter == paths_numbers.penultimate %}
-                                                <a href="/dashboard/filemanager/{{path.folder_id}}">
-                                                    {{path.folder_visible_name}} /
-                                                </a>
-                                                <span> > </span>
-                                            {%elif forloop.counter == paths_numbers.last %}
-                                                <a href="/dashboard/filemanager/{{path.folder_id}}">
-                                                    {{path.folder_visible_name}} /
-                                                </a>
-                                            {%endif%}
-                                        {%endfor%}
-                                    {%else%}
-                                        {%for path in path_to_root%}
-                                            {%if path.parent_folder == None%}
-                                                <a href="/dashboard/filemanager/">
-                                                    {{path.folder_visible_name}} /
-                                                </a><span> > </span>
-                                            {%else%}
-                                                {%if forloop.counter != paths_numbers.last%}
-                                                    <a href="/dashboard/filemanager/{{path.folder_id}}">
-                                                        {{path.folder_visible_name}} /
-                                                    </a> <span> > </span>
-                                                {%else%}
-                                                    <a href="/dashboard/filemanager/{{path.folder_id}}">
-                                                        {{path.folder_visible_name}} /
-                                                    </a>
-                                                {%endif%}
-                                            {%endif%}
-                                        {%endfor%}
-                                    {%endif%}
-                                
-                                
-                            </div>
-                            <p>
-                                {{warn_message}}
-                            </p>
-                            <a href="/dashboard/filemanager/{{parent_id}}">
-                                <button>
-                                    <img src="{% static 'images/return_arrow.png' %}" />
+
+                    <div class="content_area_fileManagement_header_createArea">
+                        <div class="content_area_fileManagement_header_createArea_dropDown">
+                            <button class="toggle_dropDown">
+                                <span> + </span> Add new
+                            </button>
+                            <div class="content_area_fileManagement_header_createArea_dropDown_options invisible">
+                                <button class="call_fileUpload">
+                                    <img src="{% static 'images/folder_create.png' %}" alt="">
+                                    Upload files
                                 </button>
-                            </a>
-                        </div>
-                        {%if folders or files%}
-                            <div class="content_area_fileManagement_manager_title_folders">
-                                {% for folder in folders %}
-                                <folder-component 
-                                    folderTitle="{{folder.folder_visible_name}}" 
-                                    folderId="{{folder.folder_id}}"
-                                    folderImgSrc="{% static '/images/folderIcon.png' %}" 
-                                    deleteIcon="{% static '/images/delete.png' %}"
-                                    editIcon="{% static '/images/edit.png' %}">
-                                </folder-component>
-                                {% endfor %}
-                            
-                                {% for file in files%}
-                                <file-component
-                                    fileUrl="{{file.file.url}}" 
-                                    fileTitle="{{file.file_visible_name}}" 
-                                    fileId="{{file.file_id}}"
-                                    fileImgSrc="{% static '/images/files.png' %}" deleteIcon="{% static '/images/delete.png' %}">
-                                </file-component>
-                                {% endfor %}
+                                <button class="call_folderCreator">
+                                    <img src="{% static 'images/file_create.png' %}" alt="">
+                                    Create folder
+                                </button>
                             </div>
-                        {%else%}
-                            <div class="content_area_fileManagement_manager_title_emptyFolders">
-                                <img src="{% static 'images/nothing_found.png'%}" />
-                                <h2>
-                                    Nothing Here ...
-                                </h2>
+                        </div>
+
+                        <div class="content_area_fileManagement_header_createArea_createFolder_uploadFile hidden ">
+                            <div class="content_area_fileManagement_header_createArea_uploadFile_header">
+                                <h3>
+                                    Upload File
+                                </h3>
                                 <p>
-                                    Create folders or upload some files to see them here !
+                                    Upload File in the form
                                 </p>
+                                <button class="close_UploadFile_edit">
+                                    x
+                                </button>
                             </div>
-                        {% endif %}
-                       
+                        
+                            <form action="/dashboard/filemanager/{{ folder_id }}" 
+                            enctype="multipart/form-data" 
+                            class="content_area_fileManagement_header_createArea_uploadFile_form"
+                                method="post">
+                                {% csrf_token %}
+                                <div class="content_area_fileManagement_header_createArea_uploadFile_form_top">
+                                    <div class="content_area_fileManagement_header_createArea_uploadFile_form_top_header">
+                                        <h3>
+                                            Drop files here
+                                        </h3>
+                                        <p>
+                                            or
+                                        </p>
+                                    </div>
+                                    {{file_form.as_p}}
+                                </div>
+                                <div class="content_area_fileManagement_header_createArea_uploadFile_form_bottom">
+                                    <button type="submit" class="uploadFile">
+                                        Upload
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="content_area_fileManagement_header_createArea_createFolder_editFolder hidden">
+                            <div class="content_area_fileManagement_header_createArea_editFolder_header">
+                                <h3>
+                                    Edit Folder
+                                </h3>
+                                <p>
+                                    Edit name of <span class="editFolder_name"></span>
+                                </p>
+                                <button class="close_folder_edit">
+                                    x
+                                </button>
+                            </div>
+                        
+                            <form action="/dashboard/filemanager/{{ folder_id }}" class="content_area_fileManagement_header_createArea_editFolder_form"
+                                method="post">
+                                {% csrf_token %}
+                                <div class="content_area_fileManagement_header_createArea_editFolder_form_top">
+                                    <label for="folder_input">Name</label>
+                                    <input type="text" name="folder_to_rename" id="folder_input" placeholder="Folder name" />
+                                    <input type="text" name="folder_id_to_rename" id="folder_id_to_rename" hidden placeholder="Folder name" />
+                                </div>
+                                <div class="content_area_fileManagement_header_createArea_editFolder_form_bottom">
+                        
+                                    <button type="submit" class="edit_folder">
+                                        Edit
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="content_area_fileManagement_header_createArea_createFolder hidden">
+                            <div class="content_area_fileManagement_header_createArea_createFolder_header">
+                                <h3>
+                                    Add new Folder
+                                </h3>
+                                <p>
+                                    Create a new folder
+                                </p>
+                                <button class="close_folder_creation">
+                                    x
+                                </button>
+                            </div>
+
+                            <form action="/dashboard/filemanager/{{ folder_id }}"
+                                class="content_area_fileManagement_header_createArea_createFolder_form" method="post">
+                                {% csrf_token %}
+                                <div class="content_area_fileManagement_header_createArea_createFolder_form_top">
+                                    <label for="folder_input">Name</label>
+                                    <input type="text" name="folder_input" id="folder_input"
+                                        placeholder="Folder name" />
+                                    
+                                </div>
+                                <div class="content_area_fileManagement_header_createArea_createFolder_form_bottom">
+
+                                    <button type="submit" class="create_folder">
+                                        Create
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="content_area_fileManagement_search">
+                    <div class="content_area_fileManagement_search_content">
+                        <div class="image">
+                            <img src="{% static 'images/search.png' %}" alt="">
+                        </div>
+                        <input type="text" class="content_area_fileManagement_search-input" placeholder="Search">
                     </div>
                 </div>
+                
+                <div class="content_area_fileManagement_manager">
+                    <div class="content_area_fileManagement_manager_title">
+                        <h2>
+                            {{folder_name}}
+                        </h2>
+                        <div class="content_area_fileManagement_manager_title_path">
+                                {% if path_quantity >= 5%}
+                                    {%for path in path_to_root%}
+                                        {%if forloop.counter == paths_numbers.first%}
+                                            <a href="/dashboard/filemanager/">
+                                                {{path.folder_visible_name}} /
+                                            </a>
+                                            <span> > </span>
+                                        {%elif forloop.counter == paths_numbers.secound  %}
+                                            <span>...</span><span> > </span>
+                                        {%elif forloop.counter == paths_numbers.penultimate %}
+                                            <a href="/dashboard/filemanager/{{path.folder_id}}">
+                                                {{path.folder_visible_name}} /
+                                            </a>
+                                            <span> > </span>
+                                        {%elif forloop.counter == paths_numbers.last %}
+                                            <a href="/dashboard/filemanager/{{path.folder_id}}">
+                                                {{path.folder_visible_name}} /
+                                            </a>
+                                        {%endif%}
+                                    {%endfor%}
+                                {%else%}
+                                    {%for path in path_to_root%}
+                                        {%if path.parent_folder == None%}
+                                            <a href="/dashboard/filemanager/">
+                                                {{path.folder_visible_name}} /
+                                            </a><span> > </span>
+                                        {%else%}
+                                            {%if forloop.counter != paths_numbers.last%}
+                                                <a href="/dashboard/filemanager/{{path.folder_id}}">
+                                                    {{path.folder_visible_name}} /
+                                                </a> <span> > </span>
+                                            {%else%}
+                                                <a href="/dashboard/filemanager/{{path.folder_id}}">
+                                                    {{path.folder_visible_name}} /
+                                                </a>
+                                            {%endif%}
+                                        {%endif%}
+                                    {%endfor%}
+                                {%endif%}
+                            
+                            
+                        </div>
+                        <p>
+                            {{warn_message}}
+                        </p>
+                        <a href="/dashboard/filemanager/{{parent_id}}">
+                            <button>
+                                <img src="{% static 'images/return_arrow.png' %}" />
+                            </button>
+                        </a>
+                    </div>
+                    {%if folders or files%}
+                        <div class="content_area_fileManagement_manager_title_folders">
+                            {% for folder in folders %}
+                            <folder-component 
+                                folderTitle="{{folder.folder_visible_name}}" 
+                                folderId="{{folder.folder_id}}"
+                                folderImgSrc="{% static '/images/folderIcon.png' %}" 
+                                deleteIcon="{% static '/images/delete.png' %}"
+                                editIcon="{% static '/images/edit.png' %}">
+                            </folder-component>
+                            {% endfor %}
+                        
+                            {% for file in files%}
+                            <file-component
+                                fileUrl="{{file.file.url}}" 
+                                fileTitle="{{file.file_visible_name}}" 
+                                fileId="{{file.file_id}}"
+                                fileImgSrc="{% static '/images/files.png' %}" deleteIcon="{% static '/images/delete.png' %}">
+                            </file-component>
+                            {% endfor %}
+                        </div>
+                    {%else%}
+                        <div class="content_area_fileManagement_manager_title_emptyFolders">
+                            <img src="{% static 'images/nothing_found.png'%}" />
+                            <h2>
+                                Nothing Here ...
+                            </h2>
+                            <p>
+                                Create folders or upload some files to see them here !
+                            </p>
+                        </div>
+                    {% endif %}
+                    
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="removeFile invisible">
-            <div class="removeFile_content">
-                <div class="removeFile_content_header">
-                    <h2>
-                        Do you want to delete <span class="fileToRemove"></span> ?
-                    </h2>
-                    <p>
-                        ⚠️ This action is irreversible and will delete that File !
-                    </p>
-                </div>
-                <div class="removeFile_content_buttons">
-                    <form action="/dashboard/filemanager/{{ folder_id }}" method="post" class="removeFile_content_form">
-                        {% csrf_token %}
-                        <input hidden value="id_of_File" id="File_to_remove" name="file_to_remove" />
-                        <button type="submit">
-                            Delete File
-                        </button>
-                    </form>
-                    <button class="removeFile_content_buttons-button">
-                        Cancel
+    <div class="removeFile invisible">
+        <div class="removeFile_content">
+            <div class="removeFile_content_header">
+                <h2>
+                    Do you want to delete <span class="fileToRemove"></span> ?
+                </h2>
+                <p>
+                    ⚠️ This action is irreversible and will delete that File !
+                </p>
+            </div>
+            <div class="removeFile_content_buttons">
+                <form action="/dashboard/filemanager/{{ folder_id }}" method="post" class="removeFile_content_form">
+                    {% csrf_token %}
+                    <input hidden value="id_of_File" id="File_to_remove" name="file_to_remove" />
+                    <button type="submit">
+                        Delete File
                     </button>
-                </div>
+                </form>
+                <button class="removeFile_content_buttons-button">
+                    Cancel
+                </button>
             </div>
         </div>
+    </div>
 
-        <div class="removeFolder invisible">
-            <div class="removeFolder_content">
-                <div class="removeFolder_content_header">
-                    <h2>
-                        Do you want to delete <span class="folderToRemove"></span> ?
-                    </h2>
-                    <p>
-                        ⚠️ This action is irreversible and will delete everything inside that folder !
-                    </p>
-                </div>
-                <div class="removeFolder_content_buttons">
-                    <form action="/dashboard/filemanager/{{ folder_id }}" method="post" class="removeFolder_content_form">
-                        {% csrf_token %}
-                        <input hidden value="id_of_folder" id="folder_to_remove" name="folder_to_remove" />
-                        <button type="submit">
-                            Delete Folder
-                        </button>
-                    </form>
-                    <button class="removeFolder_content_buttons-button">
-                        Cancel
-                    </button>
-                </div>
+    <div class="removeFolder invisible">
+        <div class="removeFolder_content">
+            <div class="removeFolder_content_header">
+                <h2>
+                    Do you want to delete <span class="folderToRemove"></span> ?
+                </h2>
+                <p>
+                    ⚠️ This action is irreversible and will delete everything inside that folder !
+                </p>
             </div>
+            <div class="removeFolder_content_buttons">
+                <form action="/dashboard/filemanager/{{ folder_id }}" method="post" class="removeFolder_content_form">
+                    {% csrf_token %}
+                    <input hidden value="id_of_folder" id="folder_to_remove" name="folder_to_remove" />
+                    <button type="submit">
+                        Delete Folder
+                    </button>
+                </form>
+                <button class="removeFolder_content_buttons-button">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="showFileContent invisible">
+        <div class="showFileContent_header">
+            <a href="/media/uploads/nothing_found_axZV5rb.png" class="showFileContent_header_download" download="">
+                <img src="{% static 'images/download.png' %}" alt="">
+            </a>
+            <button class="showFileContent_header_close">
+                x
+            </button>
         </div>
     
-            <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
-            <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
-            <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
-            <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
-            <script src="{% static 'js/webComponents/dashBoard/folder/fileComponent.js' %}"></script>
-            <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
-            <script src="{% static 'js/webComponents/dashBoard/functionalities/searchFilesFolders.js' %}"></script>
-            <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
-    </body>
-    
-    </html>
+        <div class="showFileContent_content">
+            <iframe src="/media/uploads/nothing_found_axZV5rb.png" frameborder="0"></iframe>
+        </div>
+    </div>
+
+    <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/folder/fileComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/functionalities/folderRemove.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/functionalities/searchFilesFolders.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/functionalities/toggleFileAndFolderCreation.js' %}"></script>
 </body>
 </html>

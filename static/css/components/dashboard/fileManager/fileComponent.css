@@ -60,6 +60,7 @@
 
 
 .removeButton {
+    z-index: 2;
     margin-top: 5px;
     margin-left: 5px;
     transform: translateY(-120px);
