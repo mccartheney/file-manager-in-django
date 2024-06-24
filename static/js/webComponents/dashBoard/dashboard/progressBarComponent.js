@@ -7,19 +7,12 @@ class porcentageBar extends HTMLElement {
     }
 
     connectedCallback () {
-        console.log("teste");
         let total = this.getAttribute("totalStorage")
         let type_used_storage = this.getAttribute("type_storage")
-
-        console.log(total);
-        console.log(type_used_storage);
 
         let porcentage = ((type_used_storage / total) * 100).toFixed(2)
 
         let porcentage_bar =this.shadow.querySelector(".content_area_types_cards_card_space_actualSpaceSpace")
-        console.log(porcentage_bar);
-
-        console.log(porcentage);
 
         porcentage_bar.style.width = `${porcentage}%`
     }

@@ -194,7 +194,10 @@
                                     fileUrl="{{file.file.url}}" 
                                     fileTitle="{{file.file_visible_name}}" 
                                     fileId="{{file.file_id}}"
-                                    fileImgSrc="{% static '/images/files.png' %}" 
+                                    fileImgSrc="{% static '/images/images.png' %}" 
+                                    fileVideoSrc="{% static '/images/videos.png' %}"
+                                    fileAudioSrc="{% static '/images/audios.png' %}"
+                                    fileDocumentSrc="{% static '/images/documents.png' %}"
                                     deleteIcon="{% static '/images/delete.png' %}">
                                 </file-component>
                             {% endfor %}

@@ -38,7 +38,7 @@
 }
 
 .file_logo {
-    filter: invert();
+    filter:brightness(0) invert();
 }
 
 .file_fileName {

@@ -10,14 +10,38 @@ class fileComponent extends HTMLElement {
     }
 
 
-    updateIframe = () => {
-        
+    getExtension (fileName) {
+        // Find the last occurrence of a dot in the file name
+        let lastDotIndex = fileName.lastIndexOf('.');
+
+        // If there is no dot, return an empty string
+        if (lastDotIndex === -1) {
+            return '';
+        }
+
+        // Return the substring after the last dot
+        return fileName.substring(lastDotIndex + 1);
     }
 
     connectedCallback () {
+        
+        let fileName = this.getAttribute("fileTitle")
+        let fileExtension = this.getExtension(fileName)
+        let fileLogo = this.shadow.querySelector(".file_logo")
+
+        console.log(fileLogo);
+        
+        if (fileExtension == "svg" ||fileExtension == "png" || fileExtension == "jpeg" || fileExtension == "jpg") {
+            fileLogo.src = this.getAttribute("fileImgSrc")
+        }else if (fileExtension == "mp3") {
+            fileLogo.src = this.getAttribute("fileAudioSrc")
+        } else if (fileExtension == "mp4") {
+            fileLogo.src = this.getAttribute("fileVideoSrc")
+        } else {
+            fileLogo.src = this.getAttribute("fileDocumentSrc")            
+        }
 
         let closeWindowButton = document.querySelector(".removeFile_content_buttons-button")
-
 
         let removeButton = this.shadow.querySelector(".removeButton")
         let deleteFileWindow = document.querySelector(".removeFile")

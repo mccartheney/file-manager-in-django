@@ -1,61 +1,67 @@
-body {
-    min-height: 100vh;
-    width: 100vw;
-
+.main_content {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 10px;
+    max-height: 100vh;
 }
 
-.form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+.content_area {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: calc(100% - 50px);
+    margin-left: 10px;
 }
 
-.form_header {
-    margin-bottom: 40px;
+.forms {
+    width: 50%;
+    border: 1px solid var(--white);
+    border-radius: 10px;
+    margin-left: 15px;
 }
 
-.form_title {
-    width: 100%;
-    margin-bottom: 10px;
-    text-align: start;
+h2 {
+    margin-left: 15px;
+    font-family: "Oswald", sans-serif;
     color: var(--white);
     font-size: 30px;
-    font-family: "Oswald", sans-serif;
+    margin-bottom: 20px;
 }
 
-.form_content {
+form {
+    margin: 20px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
 }
 
-.form_content input {
-    background-color: var(--dark-purple);
-    border: none;
-    width: 300px;
-    height: 15px;
-    padding: 20px;
+form h3 {
+    font-family: "Oswald", sans-serif;
     color: var(--white);
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 
-.form_content input:active {
-    outline: none;
-}
-
-.form_content button {
-    border-radius: 10px;
+input {
+    padding: 15px;
     font-family: "lato", sans-serif;
-    cursor: pointer;
-    width: 340px;
-    margin:40px;
-    margin-left: -1px;
-    height: 50px;
-    background-color: var(--dark-purple);
-    color: var(--white);
+    background-color: transparent;
     border: none;
+    color: var(--white);
+    border: 1px solid var(--white);
+    border-radius: 10px;
+}
+
+button {
+    cursor: pointer;
+    font-family: "lato", sans-serif;
+    padding: 15px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    color: var(--white);
+    transition: .5s;
+    background-color: var(--dark-purple);
+}
+
+button:hover {
+    transform: translateY(-5px);
+    transition: .5s;
 }

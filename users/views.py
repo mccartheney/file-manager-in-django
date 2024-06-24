@@ -17,24 +17,22 @@ from uuid import uuid4
 def user_view (request) :
 
     if request.method == "POST" :
-        new_password = request.POST.get ("change_password")
-        print(request.POST)
-
-
+        # get user
         user = request.user
-        profile = user.profile
 
-        user.set_password(new_password)
-        profile.password = new_password
+        if request.POST.get("new_password") :
 
-        user.save()
-        profile.save()    
+            # get new password
+            new_password = request.POST.get ("new_password")
+            
+            # set and save new password
+            user.set_password(new_password)
+            user.save()
 
-        return redirect ("/logout")
+            # loggout user
+            return redirect ("/logout")
 
-    change_form = change_pass_form()
-
-    return render (request,"users/userPage.html", {"form" : change_form})
+    return render (request,"users/userPage.html")
 
 # view to make a login
 def login_view (request) :

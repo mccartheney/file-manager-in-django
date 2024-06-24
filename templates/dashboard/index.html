@@ -22,6 +22,10 @@
             radial-gradient(closest-side, var(--dark-gray) 79%, transparent 80% 100%),
             conic-gradient(var(--dark-purple) {{used_porcentage}}%, var(--light-gray) 0);
         }
+
+        storage-graphic {
+            width: 80%;
+        }
     </style>
 
 </head>
@@ -82,9 +86,9 @@
                         <progress value="{{used_storage}}" min="0" max="100" style="visibility:hidden;height:0;width:0;">{{used_storage}}</progress>
                     </div>
                     <h4>
-                        {{used_storage}}
+                        {{used_storage}} Mb
                         <br>
-                        <span>Used of {{total_storage}}</span>
+                        <span>Used of {{total_storage}} Mb</span>
                     </h4>
                     <div class="content_area_filesAndConsumedStorage_ConsumedStorage_info">
                         <div class="used_color"></div>
@@ -99,137 +103,91 @@
                     </div>
                 </div>
 
-                <div id="chart-container">
-                    <div id="y-axis"></div>
-                    <div id="chart"></div>
-                </div>
+                <storage-graphic
+                    imagesPorcentage={{file_sizes.images}}
+                    videosPorcentage={{file_sizes.videos}}
+                    audiosPorcentage={{file_sizes.audios}}
+                    documentsPorcentage={{file_sizes.documents}}
+                >
+                </storage-graphic>
+            </div> 
 
-            </div>    
+            <div class="content_area_folders">
+                <div class="content_area_folders_header">
+                    <h2 class="content_area_folders_header_title">
+                        Folders
+                    </h2>
+                    <a href="/dashboard/folders/" class="content_area_folders_header_allFolders">
+                        All folders
+                    </a>
+                </div>
+                <div class="content_area_folders_folders">
+                    {% for folder in folders %}
+                        <folder-component folderTitle="{{folder.folder_visible_name}}" folderId="{{folder.folder_id}}"
+                            folderImgSrc="{% static '/images/folderIcon.png' %}" deleteIcon="{% static '/images/delete.png' %}"
+                            editIcon="{% static '/images/edit.png' %}">
+                        </folder-component>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="content_area_files">
+                <div class="content_area_files_header">
+                    <h2>
+                        Files
+                    </h2>
+                    <a href="/dashboard/files">
+                        All files
+                    </a>
+                </div>
+                <div class="content_area_files_table">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="name">Name</th>
+                                <th>Size</th>
+                                <th>Type</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {%for file in files%}
+                                <tr>
+                                    <td class="name">
+                                    {%if file.file_extendion == "png" or file.file_extendion == "jpeg" or file.file_extendion == "jpg"%}
+                                        <img src="{% static 'images/images.png' %}" alt=""/>    
+                                    {%elif file.file_extendion == "mp3"%}
+                                        <img src="{% static 'images/audios.png' %}" alt="" />
+                                    {%elif file.file_extendion == "mp4"%}
+                                        <img src="{% static 'images/videos.png' %}" alt="" />
+                                    {%else%}
+                                        <img src="{% static 'images/documents.png' %}" alt="" />
+                                    {%endif%}    
+                                        
+                                    {{file.file_name}}</td>
+                                    <td>{{file.file_size}} Mb</td>
+                                    <td>{{file.file_extendion}}</td>
+                                    <td>
+                                        <a href="{{file.file_url}}" download="">
+                                            <img src="{%static '/images/download.png'%}" style="width: 30px;" alt="">
+                                        </a>
+                                    </td>
+                                </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
+    <script src="{% static 'js/webComponents/dashBoard/folder/folderComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/dashBoard/dashboard/progressBarComponent.js' %}"></script>
+    <script src="{% static '/js/webComponents/dashBoard/dashboard/storageGraphic.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
     <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
-
-    
-
-
-    <style>
-
-        
-        #chart-container {
-            display: flex;
-            width: 80%;
-            margin-left: 40px;
-            align-items: flex-end;
-        }
-
-        #y-axis {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            height: 100%;
-            padding: 10px 0;
-            box-sizing: border-box;
-        }
-
-        .y-axis-label {
-            text-align: right;
-            padding-right: 10px;
-            box-sizing: border-box;
-            color: var(--white);
-            font-family: "lato", sans-serif;
-            
-        }
-
-        #chart {
-            display: flex;
-            width: 100%;
-            height: 100%;
-            border: 1px solid var(--white);
-            border-radius: 10px;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-
-        .bar {
-            flex: 1;
-            margin: 0 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .bar div {
-            width: 100%;
-            background-color: #4caf50;
-            text-align: center;
-            color: white;
-            padding: 5px 0;
-            box-sizing: border-box;
-        }
-
-        .bar-label {
-            margin-top: 5px;
-        }
-    </style>
-
-    <script>
-        // script.js
-            document.addEventListener('DOMContentLoaded', function () {
-                const data = {
-                    'images': 0.88,
-                    'videos': 0,
-                    'audios': 0.1,
-                    'documents': 35.75
-                };
-                const maxValue = 50; // Maximum value for the chart
-
-                const chart = document.getElementById('chart');
-                const yAxis = document.getElementById('y-axis');
-
-                // Calculate the number of labels needed based on the chart height and step size
-                const chartHeight = chart.offsetHeight;
-                const stepSize = 10; // Adjust step size as needed
-                const numberOfLabels = Math.ceil(maxValue / stepSize);
-
-                yAxis.style.gridTemplateRows = `repeat(${numberOfLabels}, 1fr)`;
-
-                // Create Y-axis labels from highest to lowest
-                for (let i = numberOfLabels; i >= 0; i--) {
-                    const yAxisLabel = document.createElement('div');
-                    yAxisLabel.classList.add('y-axis-label');
-                    yAxisLabel.textContent = (i * stepSize) + ' MB';
-                    yAxis.appendChild(yAxisLabel);
-                }
-
-                // Create bars
-                for (let key in data) {
-                    const value = data[key];
-                    const heightPercent = (value / maxValue) * 100;
-
-                    const bar = document.createElement('div');
-                    bar.classList.add('bar');
-
-                    const barContent = document.createElement('div');
-                    barContent.style.height = heightPercent + '%';
-                    barContent.textContent = value + ' MB';
-
-                    const barLabel = document.createElement('div');
-                    barLabel.classList.add('bar-label');
-                    barLabel.textContent = key;
-
-                    bar.appendChild(barContent);
-                    bar.appendChild(barLabel);
-                    chart.appendChild(bar);
-                }
-            });
-
-    </script>
-
 
 
 </body>

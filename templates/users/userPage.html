@@ -10,26 +10,39 @@
     <title>Reset Password</title>
 </head>
 <body>
-    <form action="/user/" method="POST" class="form">
-        <div class="form_header">
-            <logo-component redirect="/" logoImgSrc="{% static '/images/logo_mc_files.png' %}">
-            </logo-component>
+    <div class="main_content">
+        <div class="sideBar_area">
+            <sidebar-component logoImgSrc="{% static '/images/logo_mc_files.png' %}"
+                dashBoardImgSrc="{% static 'images/dashboard.png'%}" fileManagerImgSrc="{% static 'images/fileManager.png'%}"
+                actualPage="" foldersImgSrc="{% static 'images/folder.png'%}" filesImgSrc="{% static 'images/files.png'%}">
+            </sidebar-component>
         </div>
-        <div class="form_title">
+
+        <div class="content_area">
+            <header-component title="User settings" userImage="{% static 'images/user.png' %}"
+                settingIcon="{% static 'images/setting.png' %}" logOutIcon="{% static 'images/logout.png' %}">
+            </header-component>
+
             <h2>
-                Reset Password
+                Change credentials
             </h2>
+            <div class="forms">
+    
+                <form action="/user/" method="post">
+                    <h3>
+                        Set new Password
+                    </h3>
+                    <div class="inputs">
+                        {% csrf_token %}
+                        <input name="new_password" placeholder="New Password" />
+                        <button type="submit">Submit new password</button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form_content">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button type="submit">
-                Change Password
-            </button>
-        </div>
-    </form>
-
+    </div>
+    <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
+    <script src="{% static 'js/webComponents/dashBoard/header/headerComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
 </body>
 </html>

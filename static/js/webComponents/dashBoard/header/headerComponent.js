@@ -43,7 +43,7 @@ class headerComponent extends HTMLElement{
                             <button>
                                 <img src="${this.getAttribute("settingIcon")}" />
                                 
-                                Reset Password
+                                User Settings
                             </button>
                         </a>
                     </div>
