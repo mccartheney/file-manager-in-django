@@ -121,6 +121,7 @@ def register_view (request) :
                 new_user_profile.name = user_name_from_form
                 new_user_profile.email = user_email_from_form
                 new_user_profile.password = user_pass_from_form
+                new_user_profile.max_storage = 50
                 new_user_profile.save()
 
                 new_master_folder = folder.objects.create(

@@ -13,6 +13,8 @@ class user_profile (models.Model) :
     name = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
 
+    max_storage = models.IntegerField(null=True)
+
     # the name of the model
     def __str__(self) -> str:
         return f'{self.name} -{self.email}-'

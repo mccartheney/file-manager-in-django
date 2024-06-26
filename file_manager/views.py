@@ -4,9 +4,13 @@ from django.contrib.auth.decorators import login_required
 
 from django.contrib.auth import logout
 
+import os
+from dotenv import load_dotenv
+load_dotenv() 
+
 # view to return home page
 def home_page (request) :
-
+    print(os.getenv('PASS_EMAIL_SENDER'))
     return render(request, "landingPage/landingPageIndex.html")
 
 

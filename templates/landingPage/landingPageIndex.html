@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/landingPage/landingPage.css' %}">
 
     <title>File Manager</title>
 </head>
@@ -16,6 +17,7 @@
     ></header-component>
     <welcome-component 
         imgSrc = "{% static '/images/logo_mc_files.png' %}" 
+        videoSrc = "{% static '/images/showcase.mp4' %}" 
     ></welcome-component>
     <files-on-mc-component
         lock="{% static 'images/lock.png' %}"
@@ -23,6 +25,114 @@
         upload = "{% static 'images/upload.png' %}"
     ></files-on-mc-component>
 
+    <div class="files_on_mc_vantages">
+        <div class="files_on_mc_vantages_vantages">
+            <div class="files_on_mc_vantages_vantages_vantage">
+                <div class="files_on_mc_vantages_vantages_vantage_image">
+                    <img src="{% static 'images/downloadFile.png' %}" alt=""/>
+                </div>
+                <div class="files_on_mc_vantages_vantages_vantage_text">
+                    <h2>
+                        Download your Files
+                    </h2>
+                    <p>
+                        Download You uploaded files
+                    </p>
+                </div>
+            </div>
+
+            <div class="files_on_mc_vantages_vantages_vantage">
+                <div class="files_on_mc_vantages_vantages_vantage_image">
+                    <img src="{% static 'images/uploadFile.png' %}" alt="" />
+                </div>
+                <div class="files_on_mc_vantages_vantages_vantage_text">
+                    <h2>
+                        Upload your Files
+                    </h2>
+                    <p>
+                        Upload you files to clound
+                    </p>
+                </div>
+            </div>
+
+            <div class="files_on_mc_vantages_vantages_vantage">
+                <div class="files_on_mc_vantages_vantages_vantage_image">
+                    <img src="{% static 'images/fileManageLP.png' %}" alt="" />
+                </div>
+                <div class="files_on_mc_vantages_vantages_vantage_text">
+                    <h2>
+                        Amazing File Manager
+                    </h2>
+                    <p>
+                        Explore all folders and files with our incredible file manager
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="files_on_mc_vantages_video">
+    
+            <video autoplay loop muted>
+                <source src="{%static 'images/filesUpload.mp4'%}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>\
+        </div>
+    </div>
+
+    <div class="features">
+        <div class="features_header">
+            <h2>
+                Features
+            </h2>
+
+            <p>
+                Explore the powerful features of McFiles designed to enhance <br> your file management efficiency and security.
+            </p>
+        </div>
+
+        <div class="features_features">
+            <div class="features_features_feature">
+                <img src="{%static 'images/Authentication.png'%}" alt="">
+                <h3>Authentication</h3>
+                <p>Secure user login with robust protection for your app.</p>
+            </div>
+
+            <div class="features_features_feature">
+                <img src="{%static 'images/DarkMode.png'%}" alt="">
+                <h3>Dark Mode</h3>
+                <p>Enhance visual comfort with an optional darker color scheme.</p>
+            </div>
+
+            <div class="features_features_feature">
+                <img src="{%static 'images/FilePreviews.png'%}" alt="">
+                <h3>File Previews</h3>
+                <p>Quickly view file contents without download the entire file.</p>
+            </div>
+
+            <div class="features_features_feature">
+                <img src="{%static 'images/HighPerformance.png'%}" alt="">
+                <h3>High Performance</h3>
+                <p>Experience efficiency with optimized performance.</p>
+            </div>
+
+            <div class="features_features_feature">
+                <img src="{%static 'images/Analytics.png'%}" alt="">
+                <h3>Analytics</h3>
+                <p>Gain insights with detailed analytics on file usage and users activity.</p>
+            </div>
+
+            <div class="features_features_feature">
+                <img src="{%static 'images/AdvanceSearch.png'%}" alt="">
+                <h3>Advanced Search</h3>
+                <p>Find files or folders swiftly using powerful and precise search tools.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h5>
+            Developed By <span>Mc</span>cartheney Mendes
+        </h5>
+    </footer>
 
     <script src="{% static '/js/webComponents/landingPage/filesOnMc/fileOnMcComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>

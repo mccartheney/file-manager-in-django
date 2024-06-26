@@ -43,9 +43,10 @@ class welcomeComponent extends HTMLElement {
             </div>
 
             <div class="welcome_video">
-                <h1>
-                    Video Here
-                </h1>
+                <video autoplay loop muted>
+                    <source src="${this.getAttribute("videoSrc")}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
             </div>
 
         `

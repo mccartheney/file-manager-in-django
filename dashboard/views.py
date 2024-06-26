@@ -26,9 +26,12 @@ def home_dashboard (request) :
     if request.user.is_staff or request.user.is_superuser :
         return redirect ("/admin/")
 
+    print(request.user.profile.max_storage)
+
     # get all files and folder
-    all_files = reversed(request.user.profile.files.all())
+    all_files = request.user.profile.files.all()
     all_folders = reversed(request.user.profile.folders.all())
+
 
     # create context to send to html page (front end)
     context = {
@@ -36,14 +39,15 @@ def home_dashboard (request) :
         'file_sizes' : utils.get_type_files_size(all_files=all_files),
         'file_types' : utils.get_file_types(),
         'used_storage' : utils.get_used_storage(all_files=all_files),
-        'total_storage' : utils.get_total_storage(),
+        'total_storage' : request.user.profile.max_storage,
         'used_porcentage' : utils.get_used_porcentage(all_files),
         'used_float_porcentage': utils.get_used_float_porcentage(all_files),
         'left_porcentage' : utils.get_left_porcentage(all_files),
         'folders' : all_folders,
-        "files" :utils.get_files_attributes(all_files)
+        "files" : utils.get_files_attributes(all_files)
     }
 
+ 
     # render home page
     return render (request, "dashboard/index.html", context)
 
@@ -204,6 +208,16 @@ def file_manager_dashboard (request) :
             # if have file with same name do the same as folder
             if file_with_same_name :
                 visible_file_name_from_user = f"{file_name_from_user} ({len(file_with_same_name)})"
+            
+            file_size = round(file_from_user.size / (1024*1024) , 2)
+
+            used_storage = utils.get_used_storage(request.user.profile.files.all())
+            max_storage = request.user.profile.max_storage
+
+            if (used_storage+file_size) > max_storage :
+                context["warn_message"] = "You reached ypur limite, delete some file to upload that one"
+
+                return render (request, "dashboard/fileManagerRoot.html",context)
 
             # create file
             new_file = file.objects.create(
@@ -214,6 +228,7 @@ def file_manager_dashboard (request) :
                 file_name = file_name_from_user,
                 parent_folder = root_folder
             )
+
 
             # update context
             context["files"] = root_folder.children_files.all()
@@ -419,6 +434,14 @@ def file_manager_folder_dashboard (request, slug) :
             # if have folder with same name, do the same as folders
             if file_with_same_name :
                 visible_file_name_from_user = f"{file_name_from_user} ({len(file_with_same_name)})"
+
+            file_size = round(file_from_user.size / (1024*1024) , 2)
+
+            used_storage = utils.get_used_storage(request.user.profile.files.all())
+            max_storage = request.user.profile.max_storage
+
+            if (used_storage+file_size) > max_storage :
+                context["warn_message"] = "You reached ypur limite, delete some file to upload that one"
 
             # create files
             new_file = file.objects.create(

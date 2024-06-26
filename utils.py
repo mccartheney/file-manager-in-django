@@ -1,5 +1,3 @@
-from django.shortcuts import render,redirect
-
 def get_type_files_size (all_files): 
     file_types = {
         "images":[],
@@ -49,7 +47,6 @@ def get_total_storage () :
     return 50
 
 def get_used_porcentage (all_files) :
-    print(round((get_used_storage(all_files=all_files)/get_total_storage()) * 100))
     return round((get_used_storage(all_files=all_files)/get_total_storage()) * 100)
 
 def get_used_float_porcentage (all_files ) :
@@ -98,4 +95,4 @@ def get_files_attributes (files) :
 
         files_attributes.append(file_attribute)
 
-    return files_attributes
+    return reversed(files_attributes)

@@ -53,11 +53,11 @@
                             </button>
                             <div class="content_area_fileManagement_header_createArea_dropDown_options invisible">
                                 <button class="call_fileUpload">
-                                    <img src="{% static 'images/folder_create.png' %}" alt="">
+                                    <img src="{% static 'images/file_create.png' %}" alt="">
                                     Upload files
                                 </button>
                                 <button class="call_folderCreator">
-                                    <img src="{% static 'images/file_create.png' %}" alt="">
+                                    <img src="{% static 'images/folder_create.png' %}" alt="">
                                     Create folder
                                 </button>
                             </div>
@@ -179,7 +179,7 @@
                             {{folder_name}}
                         </h2>
                         <div class="content_area_fileManagement_manager_title_path">
-                                {% if path_quantity >= 5%}
+                                {% if path_quantity >= 5 %}
                                     {%for path in path_to_root%}
                                         {%if forloop.counter == paths_numbers.first%}
                                             <a href="/dashboard/filemanager/">
@@ -331,6 +331,8 @@
             <iframe src="/media/uploads/nothing_found_axZV5rb.png" frameborder="0"></iframe>
         </div>
     </div>
+
+
 
     <script src="{% static '/js/webComponents/dashBoard/sideBar/sideBarComponent.js' %}"></script>
     <script src="{% static '/js/webComponents/logo/logoComponent.js' %}"></script>
