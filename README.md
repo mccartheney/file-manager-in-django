@@ -70,7 +70,7 @@ The Mc Files project is a comprehensive web application aimed at providing effic
 
 ### User Registration and Authentication
 
-The Mc Files project includes robust user registration and authentication features to ensure secure access and management of user accounts. The key functionalities are:
+The Mc Files project includes a robust user registration and authentication features to ensure secure access and management of user accounts. The key functionalities are:
 
 1. **User Registration**:
    - New users can create an account by providing necessary details such as username, email, and password.
