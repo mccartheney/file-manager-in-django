@@ -173,9 +173,9 @@ Use this steps for installation :
 
 Use this step to start application (needed to run 'make all' before)
 
-1. **Run the setup:**
+1. **Run the command:**
    ```bash
-   make all
+   make start
    ```
 
 ### Stopping the Application
@@ -184,7 +184,7 @@ Use this step to stop application (needed to run 'make all' before)
 
 1. **Run the command:**
    ```bash
-   docker-compose down
+   make stop
    ```
 
 ### Creating a Superuser
@@ -196,7 +196,7 @@ Use this step to create a super user (needed to run 'make all' before), and cred
 
 1. **Run the command:**
    ```bash
-   createsuperuser
+   make createsuperuser
    ```
 
 ## Development
