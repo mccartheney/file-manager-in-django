@@ -55,8 +55,16 @@ The Mc Files project is a comprehensive web application aimed at providing effic
 
 ### Screenshot
 
-...
-
+![](/screenshots/landing_page.png)
+![](/screenshots/register.png)
+![](/screenshots/login.png)
+![](/screenshots/empty_dashboard.png)
+![](/screenshots/used_dashboard.png)
+![](/screenshots/empty_root.png)
+![](/screenshots/root_folder.png)
+![](/screenshots/empty_folder.png)
+![](/screenshots/folder_tab.png)
+![](/screenshots/file_tab.png)
 
 ## Features
 
