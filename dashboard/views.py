@@ -443,6 +443,9 @@ def file_manager_folder_dashboard (request, slug) :
             if (used_storage+file_size) > max_storage :
                 context["warn_message"] = "You reached ypur limite, delete some file to upload that one"
 
+                return render (request, "dashboard/fileManagerFolder.html", context)
+
+
             # create files
             new_file = file.objects.create(
                 User = user_profile,

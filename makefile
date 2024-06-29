@@ -12,7 +12,7 @@ createsuperuser:
 	docker compose run --rm app poetry run python manage.py createsuperuser
 
 start:
-	docker compose up --build 
+	docker compose up
 
 stop:
 	docker compose down
